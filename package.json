@@ -1,0 +1,48 @@
+{
+  "name": "zapier-freightutils",
+  "version": "0.1.0",
+  "description": "Zapier integration for FreightUtils — free freight tools API (CBM, LDM, chargeable weight, ADR dangerous goods, HS codes, customs, reference data).",
+  "private": false,
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --testPathPattern=test",
+    "validate": "zapier validate",
+    "push": "zapier push"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "zapier-platform-core": "17.9.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "zapier-platform-cli": "17.9.1"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Marius Cristoiu",
+    "email": "contact@freightutils.com",
+    "url": "https://www.freightutils.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoapyRED/zapier-freightutils.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SoapyRED/zapier-freightutils/issues"
+  },
+  "homepage": "https://www.freightutils.com",
+  "keywords": [
+    "zapier",
+    "freight",
+    "logistics",
+    "shipping",
+    "freightutils",
+    "dangerous-goods",
+    "adr",
+    "hs-codes",
+    "customs",
+    "incoterms"
+  ]
+}
