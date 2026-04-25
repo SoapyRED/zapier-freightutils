@@ -9,7 +9,9 @@ const perform = async (z, bundle) => {
 					length: bundle.inputData.length,
 					width: bundle.inputData.width,
 					height: bundle.inputData.height,
-					grossWeight: bundle.inputData.grossWeight,
+					// /api/consignment input parser only recognises camelCase aliases on
+					// item fields. Map snake_case (Zapier inputs) → camelCase (wire).
+					grossWeight: bundle.inputData.gross_weight,
 					quantity: bundle.inputData.quantity,
 				},
 			],
@@ -39,7 +41,7 @@ module.exports = {
 			{ key: 'length', label: 'Length (cm)', type: 'number', required: true, default: '60' },
 			{ key: 'width', label: 'Width (cm)', type: 'number', required: true, default: '40' },
 			{ key: 'height', label: 'Height (cm)', type: 'number', required: true, default: '30' },
-			{ key: 'grossWeight', label: 'Gross Weight (kg)', type: 'number', required: true, default: '25' },
+			{ key: 'gross_weight', label: 'Gross Weight (kg)', type: 'number', required: true, default: '25' },
 			{ key: 'quantity', label: 'Quantity', type: 'number', required: true, default: '2' },
 		],
 		sample: {

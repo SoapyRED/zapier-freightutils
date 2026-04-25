@@ -35,13 +35,13 @@ module.exports = {
 			total_boxes: 64,
 			layers: 4,
 			boxes_per_layer: 16,
-			limitingFactor: 'height',
+			limiting_factor: 'height',
 		},
 		outputFields: [
 			{ key: 'total_boxes', label: 'Total Boxes', type: 'number' },
 			{ key: 'layers', label: 'Layers', type: 'number' },
 			{ key: 'boxes_per_layer', label: 'Boxes Per Layer', type: 'number' },
-			{ key: 'limitingFactor', label: 'Limiting Factor' },
+			{ key: 'limiting_factor', label: 'Limiting Factor' },
 		],
 	},
 };

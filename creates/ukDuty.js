@@ -3,9 +3,9 @@ const perform = async (z, bundle) => {
 		url: 'https://www.freightutils.com/api/duty',
 		method: 'POST',
 		body: {
-			commodity_code: bundle.inputData.commodityCode,
-			origin_country: bundle.inputData.originCountry,
-			customs_value: bundle.inputData.customsValue,
+			commodity_code: bundle.inputData.commodity_code,
+			origin_country: bundle.inputData.origin_country,
+			customs_value: bundle.inputData.customs_value,
 		},
 	});
 	return response.data;
@@ -22,7 +22,7 @@ module.exports = {
 		perform,
 		inputFields: [
 			{
-				key: 'commodityCode',
+				key: 'commodity_code',
 				label: 'Commodity Code',
 				type: 'string',
 				required: true,
@@ -30,7 +30,7 @@ module.exports = {
 				helpText: '10-digit HS commodity code',
 			},
 			{
-				key: 'originCountry',
+				key: 'origin_country',
 				label: 'Origin Country (ISO Alpha-2)',
 				type: 'string',
 				required: true,
@@ -38,7 +38,7 @@ module.exports = {
 				helpText: 'Two-letter country code, e.g. BR, CN, US',
 			},
 			{
-				key: 'customsValue',
+				key: 'customs_value',
 				label: 'Customs Value (GBP)',
 				type: 'number',
 				required: true,
