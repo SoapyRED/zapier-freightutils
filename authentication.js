@@ -44,11 +44,7 @@ const authentication = {
 		},
 	],
 
-	connectionLabel: (z, bundle) => {
-		const key = bundle.authData && bundle.authData.apiKey;
-		if (!key) return 'FreightUtils';
-		return `FreightUtils (${key.slice(0, 8)}…)`;
-	},
+	connectionLabel: 'FreightUtils Account',
 };
 
 const beforeRequest = (request, z, bundle) => {

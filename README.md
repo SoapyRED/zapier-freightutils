@@ -19,7 +19,7 @@ Zapier integration for [FreightUtils](https://www.freightutils.com) — free fre
 
 **Searches**
 - Find ADR Entry
-- Find HS Code
+- HS Code Lookup
 - Find Incoterm
 - Find Airline
 - Find UN/LOCODE Location
@@ -66,13 +66,17 @@ Rate limits:
 
 **Action** — Zapier AI Action or Formatter: extract `sku_description`, `origin_country`, `customs_value`.
 
-**Action** — FreightUtils: *Find HS Code*. Query → `{{sku_description}}`. Returns a list of candidate commodity codes.
+**Action** — FreightUtils: *HS Code Lookup*. Query → `{{sku_description}}`. Returns a list of candidate HS codes.
 
-**Filter** — only continue if the top match has `commodity_code` populated.
+**Filter** — only continue if the top match has `hs_code` populated.
 
-**Action** — FreightUtils: *Calculate UK Import Duty*. Commodity Code → `{{commodity_code}}`, Origin Country → `{{origin_country}}`, Customs Value → `{{customs_value}}`.
+**Action** — FreightUtils: *Calculate UK Import Duty*. Commodity Code → `{{hs_code}}`, Origin Country → `{{origin_country}}`, Customs Value → `{{customs_value}}`.
 
-**Action** — Slack: Send Message. Template: `HS: {{commodity_code}} · Duty: £{{duty_gbp}} · VAT: £{{vat_gbp}} · Total: £{{total_gbp}}`.
+**Action** — Slack: Send Message. Template: `HS: {{hs_code}} · Duty: £{{duty_gbp}} · VAT: £{{vat_gbp}} · Total: £{{total_gbp}}`.
+
+## Known Constraints
+
+**Email by Zapier (free plan)** — Zapier's free-plan Email by Zapier action silently overrides the To: field and sends only to the account owner's email address regardless of input. This is a Zapier platform behaviour, not a FreightUtils issue. For arbitrary recipients use Gmail, Outlook, or SendGrid actions instead.
 
 ## Roadmap
 

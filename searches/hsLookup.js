@@ -4,37 +4,42 @@ const perform = async (z, bundle) => {
 		method: 'GET',
 		params: { q: bundle.inputData.q },
 	});
-	return response.data.results || [];
+	const results = response.data.results || [];
+	return results.map((r) => {
+		const { hscode, ...rest } = r;
+		return { hs_code: hscode, ...rest };
+	});
 };
 
 module.exports = {
 	key: 'hsLookup',
 	noun: 'HS Code',
 	display: {
-		label: 'Find HS Code',
-		description: 'Search WCO HS 2022 codes by free-text product description.',
+		label: 'HS Code Lookup',
+		description: 'Looks up WCO HS 2022 codes by free-text product description.',
 	},
 	operation: {
 		perform,
 		inputFields: [
 			{
 				key: 'q',
-				label: 'Search Query',
+				label: 'HS Code or Keyword',
 				type: 'string',
 				required: true,
 				default: 'coffee',
-				helpText: 'Product name, material, or partial code',
+				helpText:
+					'Enter a numeric HS code (e.g. 8517) or a keyword (e.g. telephones). Both patterns work.',
 			},
 		],
 		sample: {
-			commodity_code: '0901110000',
+			hs_code: '0901110000',
 			description: 'Coffee, not roasted, not decaffeinated',
 			section: 'IV',
 			chapter: '09',
 			heading: '0901',
 		},
 		outputFields: [
-			{ key: 'commodity_code', label: 'Commodity Code' },
+			{ key: 'hs_code', label: 'HS Code' },
 			{ key: 'description', label: 'Description' },
 			{ key: 'section', label: 'Section' },
 			{ key: 'chapter', label: 'Chapter' },
