@@ -1,6 +1,6 @@
 {
   "name": "zapier-freightutils",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Zapier integration for FreightUtils — free freight tools API (CBM, LDM, chargeable weight, ADR dangerous goods, HS codes, customs, reference data).",
   "private": false,
   "main": "index.js",

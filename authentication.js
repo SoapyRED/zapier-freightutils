@@ -4,7 +4,8 @@
  * Custom auth: users paste an API key generated at
  * https://www.freightutils.com/api-docs. Every outbound request has
  * `X-API-Key` injected via beforeRequest. Auth is verified by hitting
- * /api/health — returns 200 for valid, 401 for invalid.
+ * /api/auth/whoami — returns 200 with {authenticated, tier, key_prefix}
+ * for valid keys; 401 with {error: "unauthenticated", ...} otherwise.
  */
 
 const handleErrors = (response, z) => {
@@ -29,7 +30,7 @@ const authentication = {
 	type: 'custom',
 
 	test: {
-		url: 'https://www.freightutils.com/api/health',
+		url: 'https://www.freightutils.com/api/auth/whoami',
 		method: 'GET',
 	},
 

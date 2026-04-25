@@ -1,6 +1,9 @@
 # zapier-freightutils
 
-Zapier integration for [FreightUtils](https://www.freightutils.com) — free freight tools API. **Currently private v0.1.0** (invite-only). Public Zapier marketplace listing is queued for v0.2.0+.
+[![GitHub release](https://img.shields.io/github/v/release/SoapyRED/zapier-freightutils)](https://github.com/SoapyRED/zapier-freightutils/releases)
+[![License: MIT](https://img.shields.io/github/license/SoapyRED/zapier-freightutils)](https://opensource.org/licenses/MIT)
+
+Zapier integration for [FreightUtils](https://www.freightutils.com) — free freight tools API. **Currently private** (invite-only). Public Zapier marketplace listing is queued for v0.2.0+.
 
 ## What's in this release
 
