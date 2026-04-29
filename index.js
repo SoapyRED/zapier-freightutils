@@ -2,7 +2,7 @@ const { version: platformVersion } = require('zapier-platform-core');
 
 const { authentication, beforeRequest, afterResponse } = require('./authentication');
 
-// Creates (9)
+// Creates (10)
 const cbm = require('./creates/cbm');
 const ldm = require('./creates/ldm');
 const chargeableWeight = require('./creates/chargeableWeight');
@@ -12,6 +12,7 @@ const unitConvert = require('./creates/unitConvert');
 const adrLqCheck = require('./creates/adrLqCheck');
 const adrExemption = require('./creates/adrExemption');
 const ukDuty = require('./creates/ukDuty');
+const shipmentSummary = require('./creates/shipmentSummary');
 
 // Searches (8)
 const adrLookup = require('./searches/adrLookup');
@@ -39,6 +40,7 @@ module.exports = {
 		[adrLqCheck.key]: adrLqCheck,
 		[adrExemption.key]: adrExemption,
 		[ukDuty.key]: ukDuty,
+		[shipmentSummary.key]: shipmentSummary,
 	},
 	searches: {
 		[adrLookup.key]: adrLookup,

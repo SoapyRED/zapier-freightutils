@@ -7,7 +7,7 @@ Zapier integration for [FreightUtils](https://www.freightutils.com) — free fre
 
 ## What's in this release
 
-17 operations — **9 Creates** and **8 Searches** — wrapping the FreightUtils REST API.
+18 operations — **10 Creates** and **8 Searches** — wrapping the FreightUtils REST API.
 
 **Creates**
 - Calculate CBM
@@ -19,6 +19,7 @@ Zapier integration for [FreightUtils](https://www.freightutils.com) — free fre
 - Check ADR LQ/EQ Eligibility
 - Calculate ADR 1.1.3.6 Exemption
 - Calculate UK Import Duty
+- **Calculate Shipment Summary** — composite covering CBM, chargeable weight, LDM, customs estimate, and DG flags for an entire shipment (multi-item) in one step. Replaces 4–5 chained Zap actions.
 
 **Searches**
 - Find ADR Entry
@@ -83,9 +84,10 @@ Rate limits:
 
 ## Roadmap
 
-- **v0.2.0** — public Zapier marketplace listing submission (after dogfooding + feedback)
-- **v0.3.0** — custom dynamic dropdowns (e.g., live HS chapter picker)
-- Later — triggers on FreightUtils events when those exist
+- ~~**v0.2.0** — public Zapier marketplace listing submission (after dogfooding + feedback)~~ shipped
+- ~~**v0.3.0** — `shipmentSummary` composite Create (closes 18/18 MCP-tool parity)~~ shipped
+- **v1.0.0** — public Zapier marketplace listing submission; UX-consistency pass renaming legacy single-letter input keys (`l`/`w`/`h`/`gw`/`pl` etc. on `cbm` / `chargeableWeight` / `pallet`) to full-word snake_case (`length` / `width` / `height` / `gross_weight`).
+- Later — custom dynamic dropdowns (e.g., live HS chapter picker), triggers on FreightUtils events when those exist.
 
 ## Links
 

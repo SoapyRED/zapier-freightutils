@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.3.0 — 2026-04-29
+
+### Added
+
+- **`shipmentSummary` Create action** (`Calculate Shipment Summary`) — composite that wraps `POST /api/shipment/summary`, the FreightUtils endpoint chaining CBM + chargeable weight + LDM + ADR compliance + UK-duty estimation into a single call. One Zap step replaces what was previously 4–5 chained actions (CBM → chargeable weight → LDM → UK duty → ADR check). Closes the only remaining gap from the 18-tool `freightutils-mcp@2.0.0` catalogue (Zap audit 2026-04-29 confirmed coverage at 17/18 prior to this release).
+
+  - Per-item line items via Zapier `list: true` on `length` / `width` / `height` / `weight` / `quantity` / `description` / `stackable` / `pallet_type` / `hs_code` / `un_number` / `customs_value` — Zap users add as many entries as they have items per shipment, all positionally aligned at runtime.
+  - Top-level shipment fields: `mode` (road / air / sea), `origin_country`, `destination_country`, `incoterm`, `freight_cost`, `insurance_cost`.
+  - All input field keys are `snake_case` (matches the v0.2.0 convention; verified by lint).
+  - Sample mirrors the live response verbatim — `mode`, `itemCount`, `totals.{pieces,grossWeight,volumeCBM,chargeableWeight,billingBasis}`, `modeSpecific.{loadingMetres,palletSpaces,trailerUtilisation,suggestedVehicle,chargeableWeightRoad}`, `compliance.{hasDangerousGoods,adrFlags.{unNumbers,totalPoints,exemptionApplicable}}`, `customs.{hsCodesPresent,canEstimateUkDuty}`, plus `warnings`, `disclaimer`, `dataVersion`.
+
+### No breaking changes
+
+- Existing v0.2.0 Zaps unaffected. Nine pre-existing Creates and eight Searches all unchanged. `index.js` only gained the new action's import + registration line. `package.json` version bump is the sole non-additive edit.
+- The action-level `key:` is `shipmentSummary` (camelCase), matching the sibling-action convention (`chargeableWeight`, `ukDuty`, `unitConvert`, etc.) — Zapier internal operation keys are stable and not user-facing form-field names.
+
+### Verified
+
+- `npx zapier validate` clean.
+- Live `POST /api/shipment/summary` smoke (snake_case body, 2-item road shipment with one DG item) returned 200 with the expected structure (`itemCount: 2`, `totals.chargeableWeight: 1575`, `compliance.hasDangerousGoods: true`, `compliance.adrFlags.unNumbers: ["1203"]`, etc.). Sample object in `creates/shipmentSummary.js` is taken from this response verbatim.
+
 ## 0.2.0 — 2026-04-25 (later — input-side casing)
 
 ### BREAKING
