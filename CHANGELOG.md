@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.4.0 — 2026-05-01
+
+### Added
+
+- **`adrLqCheckConsignment` Create action** (`Check ADR LQ/EQ Eligibility (Multi-Item Consignment)`) — wraps `POST /api/adr/lq-check` with the multi-item form. Zap users supply parallel lists (`un_numbers[]`, `quantities[]`, `units[]`) plus the `mode` (`lq` or `eq`); the perform handler zips them into the `items[]` array the API expects. Returns the consignment-level `overall_status` plus per-item `status` and `reason`.
+- **`adrExemptionConsignment` Create action** (`Calculate ADR 1.1.3.6 Exemption (Multi-Item Consignment)`) — wraps `POST /api/adr-calculator` with the multi-item form. Zap users supply parallel `un_numbers[]` + `quantities[]`; the perform handler emits `items[]`. Returns aggregate `total_points`, `threshold`, `exempt`, `has_category_zero`, `has_quantity_exceedance`, plus per-item `transport_category` and `points`. Closes the multi-item exemption parity gap surfaced in the 2026-04-29 Zap audit (single-substance `adrExemption` already shipped at v0.1.0; the multi-item variant is the new piece).
+
+### No breaking changes
+
+- Existing 0.3.x Zaps unaffected. The 10 prior Creates and 8 Searches are unchanged byte-for-byte; only `index.js` gains 2 new registration lines and 2 new files appear under `creates/`.
+- Both new actions use Zapier's parallel-list pattern (`list: true` on each input field), the same convention used in `consignment` and `shipmentSummary`. No user-facing field-key changes.
+
+### Versioning note
+
+The 0.3.0 source committed at `8dea43d` contained these 2 new actions on top of the originally-tagged 0.3.0 (which had 10 Creates). The package.json version was not bumped at that commit, so `zapier push` deployed the 12-action source as version "0.3.0" — overwriting the prior 10-action 0.3.0 in the dev environment. This 0.4.0 bump disambiguates: 0.3.0 = 10 Creates (original tag, deployment-blocked from public promotion 2026-04-29), 0.4.0 = 12 Creates (current). No migration required for any user — all changes since 0.2.0 are additive.
+
+### Verified
+
+- `npx zapier validate` clean (15 checks pass, 0 errors, 2 pre-existing warnings: D003 + D027).
+- Live `zapier push` deployed 0.4.0 to the private dev environment.
+- `zapier describe` confirms 12 Creates total, including both new consignment actions.
+
 ## 0.3.0 — 2026-04-29
 
 ### Added
