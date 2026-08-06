@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.4.1 — 2026-08-06 (output-side truth)
+
+### Fixed
+
+**`Calculate Consignment` advertised five output fields that `/api/consignment` has never returned.** Zapier renders `outputFields` in the step mapper, so every one of them was offered to users as something they could map — and anyone who mapped one has had a step producing an empty value on every run since. Verified by curling production, not by reading code:
+
+| Declared | Reality |
+|---|---|
+| `suggested_vehicle` | Never returned. The consignment engine deliberately emits no vehicle suggestion; a different tool (`shipment_summary`) is the one that does. |
+| `billing_basis` (top level) | Real, but it lives at `totals.billing_basis`. |
+| `totals__chargeable_weight_air` | The response carries ONE chargeable weight — `totals.chargeable_weight_kg`, computed for the mode you asked for. |
+| `totals__chargeable_weight_road` | As above. |
+| `totals__chargeable_weight_sea` | As above. |
+
+The `sample` also claimed `totals.pallet_spaces` and `totals.item_count`; the real names are `line_count` and `piece_count`, and there is no `pallet_spaces` in this response at all.
+
+**Nothing about the request changes**, and every field that was already REAL keeps its exact key — `mode`, `totals__cbm`, `totals__gross_weight_kg`, `totals__ldm`, `totals__revenue_tonnes`. So no working mapping breaks. Newly declared, because they were real and undeclared: `totals__volumetric_weight_kg`, `totals__chargeable_weight_kg`, `totals__line_count`, `totals__piece_count`, `totals__billing_basis`, `schema_version`, `air_volumetric_divisor`.
+
+The `sample` is now a copy of an actual production response rather than a hand-written illustration of what the action ought to return, which is how the drift got in.
+
+**Scope note.** Only `creates/consignment.js` was audited against production in this pass. The other 11 Creates and 8 Searches declare their own `sample`/`outputFields` the same hand-written way and have NOT been checked — see the repo issue opened alongside this release.
+
 ## 0.4.0 — 2026-05-01
 
 ### Added
