@@ -1,5 +1,45 @@
 # Changelog
 
+## 0.4.2 — 2026-08-08 (versioned User-Agent)
+
+### Added
+
+**Every outbound call now sends `User-Agent: zapier-freightutils/<version>`.** Until now this app
+sent no distinguishing User-Agent, so FreightUtils' own server metrics could not tell a call from
+this Zapier app apart from a call from the n8n node, the Make app, or a plain script. Usage
+visibility depended entirely on Zapier's dashboard — which reports task invocations, but says
+nothing about which of our integrations is actually carrying load.
+
+The version is read from `package.json` at module load, never typed into the source, so it moves
+with the release automatically. It is set in the app's single `beforeRequest` hook, which every
+action and search routes through — there is no per-action wiring to forget.
+
+Nothing about request bodies, responses, field keys or auth changes. The server records only a
+label and a date against this (no IP, no key, no account identifier).
+
+### Added — a guard for the phantom-field class
+
+`npm run contract-check` drives every operation's REAL `perform` against production and asserts
+that every field it DECLARES actually comes back. It runs the perform rather than diffing raw HTTP,
+because several operations reshape the response — a raw diff would report false failures on all of
+them and get switched off.
+
+**It found the problem is much wider than the one action fixed in 0.4.1: 17 declared output fields
+across 13 of the 20 operations are never returned.** Every one is verified against a live response
+and recorded in `scripts/contract-known-gaps.json` with its real name where one exists — mostly
+renames the declarations never followed (`iata` → `iata_code`, `tunnel_code` →
+`tunnel_restriction_code`, `billing_basis` → `basis`, `mode` → `category`) and fields declared at
+the wrong nesting level (`transport_category` is really `items__transport_category`).
+
+**These are not fixed in this release, and that is stated rather than glossed:** correcting a
+declared output key changes what users can map, so it is its own change with its own testing. The
+baseline is printed on every run and the guard is prospective — a NEW phantom fails immediately.
+Eight further absences were checked and found to be legitimately CONDITIONAL (the `shipmentSummary`
+mode-specific and customs blocks appear for other inputs), so they are recorded as correct
+declarations rather than defects.
+
+Weekly on a schedule, on demand, and on any change to the declarations themselves.
+
 ## 0.4.1 — 2026-08-06 (output-side truth)
 
 ### Fixed

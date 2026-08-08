@@ -48,11 +48,28 @@ const authentication = {
 	connectionLabel: 'FreightUtils Account',
 };
 
+// Versioned User-Agent, read from package.json rather than typed here.
+//
+// WHY IT MOVES WITH THE VERSION: the server attributes traffic per wrapper from
+// this prefix (lib/observability/surface.ts in the freighttools repo). A
+// hardcoded string would keep reporting the version it was written at, so the
+// day a release changed behaviour the numbers would still say the old one — and
+// the whole point of the header is to tell releases apart. Read once at module
+// load; require() is cached, so this is not per-request work.
+const { name: PKG_NAME, version: PKG_VERSION } = require('./package.json');
+const USER_AGENT = `${PKG_NAME}/${PKG_VERSION}`;
+
 const beforeRequest = (request, z, bundle) => {
 	request.headers = request.headers || {};
 	if (bundle.authData && bundle.authData.apiKey) {
 		request.headers['X-API-Key'] = bundle.authData.apiKey;
 	}
+	// Set unconditionally: this is the ONLY outbound hook in the app, so every
+	// call to every action and search carries it. Zapier's platform may also
+	// send its own UA at a lower layer — the server keeps those apart as
+	// `zapier` vs `zapier-platform`, and a split that drifts toward the latter
+	// is how we would learn this hook had stopped firing.
+	request.headers['User-Agent'] = USER_AGENT;
 	return request;
 };
 

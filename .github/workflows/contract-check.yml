@@ -1,0 +1,43 @@
+name: Wrapper contract check
+
+# Every declared output field must actually appear in a real response.
+#
+# WHY ON A SCHEDULE AND NOT ON PUSH: the failure this catches is not usually
+# caused by a commit HERE. `Calculate Consignment` advertised five fields
+# /api/consignment had never returned, and nothing in this repo changed on the
+# day they stopped being returned — the API moved and the declarations did not.
+# A push-triggered check would have been green through the entire period the
+# defect was live. It runs weekly against production, and on demand.
+#
+# WEEKLY, NOT DAILY, on purpose: the check makes one call per operation (20),
+# and anonymous access is 25 requests/day per IP. With FREIGHTUTILS_API_KEY set
+# it authenticates and the limit stops mattering; without it, weekly keeps the
+# run comfortably inside the anonymous budget instead of flakily at its edge.
+
+on:
+  schedule:
+    - cron: '20 6 * * 1'
+  workflow_dispatch:
+  # Declaration changes ARE worth checking immediately — that is the one case
+  # where a commit here can introduce the defect.
+  push:
+    paths:
+      - 'creates/**'
+      - 'searches/**'
+      - 'scripts/contract-check.mjs'
+      - 'scripts/contract-known-gaps.json'
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Contract check against production
+        env:
+          # Optional. Unset, the run still works but shares the 25/day
+          # anonymous IP budget with everything else on the runner.
+          FREIGHTUTILS_API_KEY: ${{ secrets.FREIGHTUTILS_API_KEY }}
+        run: node scripts/contract-check.mjs

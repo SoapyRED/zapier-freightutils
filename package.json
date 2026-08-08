@@ -1,13 +1,14 @@
 {
   "name": "zapier-freightutils",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Zapier integration for FreightUtils \u2014 free freight tools API (CBM, LDM, chargeable weight, ADR dangerous goods, HS codes, customs, reference data).",
   "private": false,
   "main": "index.js",
   "scripts": {
     "test": "jest --testPathPattern=test",
     "validate": "zapier validate",
-    "push": "zapier push"
+    "push": "zapier push",
+    "contract-check": "node scripts/contract-check.mjs"
   },
   "engines": {
     "node": ">=18"

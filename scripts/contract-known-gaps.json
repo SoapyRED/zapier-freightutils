@@ -1,0 +1,269 @@
+{
+  "_comment": [
+    "Declared output fields that are ABSENT from a real response under the operation's own",
+    "default inputs, each with a verdict and the evidence for it. Read by scripts/contract-check.mjs.",
+    "",
+    "TWO VERDICTS, and the distinction is the whole point of this file:",
+    "",
+    "  conditional — the field is REAL and the declaration is CORRECT. It simply does not appear",
+    "                for the input the check happens to send (a different mode, an optional input",
+    "                absent). Verified present under the stated input. Reported, never failed:",
+    "                failing here would be the guard lying about a working contract.",
+    "",
+    "  phantom     — the field is NOT returned under ANY input found. This is the real defect,",
+    "                the same class as the five fields `Calculate Consignment` advertised and",
+    "                /api/consignment had never returned. Reported with its correct name where one",
+    "                exists, and NOT failed only because it PREDATES this guard — see the baseline",
+    "                note below.",
+    "",
+    "THE BASELINE, stated plainly so it cannot be mistaken for coverage: this guard landed on",
+    "2026-08-08 and found 13 of 20 operations already declaring at least one absent field. Failing",
+    "on all of them on day one would have meant landing a permanently-red check, which is how a",
+    "guard gets disabled. So the pre-existing set is recorded here and the guard is PROSPECTIVE:",
+    "any absence NOT listed below fails the run. Every entry below is a live customer-facing",
+    "defect — a user who maps one of these gets an empty value on every run — and the phantom",
+    "list IS the pre-publish worklist for the Zapier public listing.",
+    "",
+    "Rules, same discipline as the vehicle-truth waivers in the freighttools repo:",
+    "  - `field` must match an absent key EXACTLY. An entry matching nothing is a FAILURE, not a",
+    "    no-op: stale paperwork reads as coverage exactly like an unwired guard does.",
+    "  - `why` must carry evidence — the real field name, or the input under which it appears.",
+    "  - Fixing one means deleting its entry in the same change. The guard then holds the line."
+  ],
+  "gaps": [
+    {
+      "op": "shipmentSummary",
+      "field": "modeSpecific__volumetricWeight",
+      "verdict": "conditional",
+      "why": "Present in AIR mode — verified 2026-08-08 against POST /api/shipment/summary with mode:\"air\". The check sends the action's default input, which is road."
+    },
+    {
+      "op": "shipmentSummary",
+      "field": "modeSpecific__chargeableWeightAir",
+      "verdict": "conditional",
+      "why": "Present in AIR mode — verified 2026-08-08, same call as above."
+    },
+    {
+      "op": "shipmentSummary",
+      "field": "modeSpecific__chargeableWeightSea",
+      "verdict": "conditional",
+      "why": "Sea-mode counterpart of chargeableWeightAir; the mode-specific block is keyed by mode by design."
+    },
+    {
+      "op": "shipmentSummary",
+      "field": "modeSpecific__revenueTonnes",
+      "verdict": "conditional",
+      "why": "Sea-mode field — revenue tonnes is the sea billing basis."
+    },
+    {
+      "op": "shipmentSummary",
+      "field": "modeSpecific__suggestedContainer",
+      "verdict": "conditional",
+      "why": "Sea-mode field."
+    },
+    {
+      "op": "shipmentSummary",
+      "field": "modeSpecific__containerCount",
+      "verdict": "conditional",
+      "why": "Sea-mode field."
+    },
+    {
+      "op": "shipmentSummary",
+      "field": "customs__hsCodesPresent",
+      "verdict": "conditional",
+      "why": "Present when any line carries an hsCode — verified 2026-08-08 with hsCode:\"090111\" on the item."
+    },
+    {
+      "op": "shipmentSummary",
+      "field": "customs__canEstimateUkDuty",
+      "verdict": "conditional",
+      "why": "Present alongside customs__hsCodesPresent, same verification."
+    },
+    {
+      "op": "shipmentSummary",
+      "field": "compliance__hasDangerousGoods",
+      "verdict": "phantom",
+      "why": "NEEDS REVIEW, and deliberately NOT called conditional. The whole `compliance` block was absent even when the item carried unNumbers:[\"1203\"] (verified 2026-08-08) — so either the block is gone from the response or the input key that triggers it is different from the one the action sends. Both readings are defects; which one it is has not been established."
+    },
+    {
+      "op": "shipmentSummary",
+      "field": "compliance__adrFlags__totalPoints",
+      "verdict": "phantom",
+      "why": "Same block as above — absent with unNumbers supplied."
+    },
+    {
+      "op": "shipmentSummary",
+      "field": "compliance__adrFlags__exemptionApplicable",
+      "verdict": "phantom",
+      "why": "Same block as above."
+    },
+    {
+      "op": "adrExemption",
+      "field": "transport_category",
+      "verdict": "phantom",
+      "why": "WRONG NESTING LEVEL, not a missing field. The real key is items__transport_category — the value is per-item, and the declaration puts it at the top level where nothing reads it."
+    },
+    {
+      "op": "adrExemption",
+      "field": "multiplier",
+      "verdict": "phantom",
+      "why": "Wrong nesting level — the real key is items__multiplier."
+    },
+    {
+      "op": "cbm",
+      "field": "revenue_tonnes",
+      "verdict": "phantom",
+      "why": "/api/cbm returns cbm_per_piece, total_volume_m3, litres, cubic_inches and pieces. There is no revenue_tonnes on this endpoint at all — it exists on /api/consignment."
+    },
+    {
+      "op": "chargeableWeight",
+      "field": "billing_basis",
+      "verdict": "phantom",
+      "why": "RENAMED. The real key is `basis`. A user mapping billing_basis has been getting an empty value."
+    },
+    {
+      "op": "ldm",
+      "field": "pallet_type",
+      "verdict": "phantom",
+      "why": "Not returned at the top level. The echoed input lives under meta__inputs, and there is no pallet_type key there either."
+    },
+    {
+      "op": "ldm",
+      "field": "quantity",
+      "verdict": "phantom",
+      "why": "Wrong level — the echoed quantity is meta__inputs__qty, a different name AND a different level."
+    },
+    {
+      "op": "pallet",
+      "field": "limiting_factor",
+      "verdict": "phantom",
+      "why": "RENAMED. The nearest real key is `weight_limited` (a boolean), which is not the same shape as the string this declares."
+    },
+    {
+      "op": "adrLookup",
+      "field": "tunnel_code",
+      "verdict": "phantom",
+      "why": "RENAMED. The real key is tunnel_restriction_code — verified 2026-08-08 against /api/adr?un=1203."
+    },
+    {
+      "op": "airlineLookup",
+      "field": "iata",
+      "verdict": "phantom",
+      "why": "RENAMED. The real key is iata_code — verified 2026-08-08 against /api/airlines?q=Emirates."
+    },
+    {
+      "op": "airlineLookup",
+      "field": "icao",
+      "verdict": "phantom",
+      "why": "RENAMED. The real key is icao_code, same verification."
+    },
+    {
+      "op": "airlineLookup",
+      "field": "cargo",
+      "verdict": "phantom",
+      "why": "RENAMED. The real key is has_cargo (boolean), same verification."
+    },
+    {
+      "op": "hsLookup",
+      "field": "chapter",
+      "verdict": "phantom",
+      "why": "/api/hs returns hscode, description, level, parent and section. There is no chapter key — verified 2026-08-08 against /api/hs?q=coffee."
+    },
+    {
+      "op": "hsLookup",
+      "field": "heading",
+      "verdict": "phantom",
+      "why": "Same endpoint, same verification — no heading key exists."
+    },
+    {
+      "op": "incotermsLookup",
+      "field": "mode",
+      "verdict": "phantom",
+      "why": "RENAMED. The nearest real key is `category` (e.g. \"sea_only\") — verified 2026-08-08 against /api/incoterms?code=FOB."
+    }
+  ],
+  "sampleGaps": [
+    {
+      "op": "adrExemption",
+      "fields": ["un_number", "quantity", "transport_category", "multiplier"],
+      "verdict": "phantom",
+      "why": "The sample shows a single-substance shape; the endpoint returns an items[] array. Every one of these is really items__<field>."
+    },
+    {
+      "op": "adrLqCheck",
+      "fields": ["items__quantity", "items__unit"],
+      "verdict": "phantom",
+      "why": "RENAMED — the real keys are items__quantity_entered and items__unit_entered."
+    },
+    {
+      "op": "cbm",
+      "fields": ["length_cm", "width_cm", "height_cm", "revenue_tonnes"],
+      "verdict": "phantom",
+      "why": "The echoed inputs live under meta__inputs__*; revenue_tonnes does not exist on this endpoint."
+    },
+    {
+      "op": "chargeableWeight",
+      "fields": ["length_cm", "width_cm", "height_cm", "billing_basis"],
+      "verdict": "phantom",
+      "why": "Echoed inputs are under meta__inputs__*; billing_basis is really `basis`."
+    },
+    {
+      "op": "ldm",
+      "fields": ["pallet_type", "quantity", "trailer_width_m"],
+      "verdict": "phantom",
+      "why": "Not returned. trailer_width_m in particular predates the loading-metre divisor rework and no key of that name survives."
+    },
+    {
+      "op": "pallet",
+      "fields": ["limiting_factor"],
+      "verdict": "phantom",
+      "why": "Same as the outputFields entry — the real key is weight_limited."
+    },
+    {
+      "op": "shipmentSummary",
+      "fields": [
+        "compliance", "compliance__hasDangerousGoods", "compliance__adrFlags",
+        "compliance__adrFlags__unNumbers", "compliance__adrFlags__totalPoints",
+        "compliance__adrFlags__exemptionApplicable"
+      ],
+      "verdict": "phantom",
+      "why": "The compliance block was absent even with unNumbers supplied — see the outputFields entry."
+    },
+    {
+      "op": "shipmentSummary",
+      "fields": ["customs", "customs__hsCodesPresent", "customs__canEstimateUkDuty", "dataVersion__adr", "dataVersion__hs"],
+      "verdict": "conditional",
+      "why": "customs__* verified present with an hsCode on the item; dataVersion__adr / __hs appear when those engines actually run."
+    },
+    {
+      "op": "unitConvert",
+      "fields": ["from", "from__value", "from__unit"],
+      "verdict": "phantom",
+      "why": "RENAMED. The real block is `input` (input__value, input__unit, input__name)."
+    },
+    {
+      "op": "adrLookup",
+      "fields": ["tunnel_code"],
+      "verdict": "phantom",
+      "why": "Real key is tunnel_restriction_code."
+    },
+    {
+      "op": "airlineLookup",
+      "fields": ["iata", "icao", "cargo"],
+      "verdict": "phantom",
+      "why": "Real keys are iata_code, icao_code, has_cargo."
+    },
+    {
+      "op": "hsLookup",
+      "fields": ["chapter", "heading"],
+      "verdict": "phantom",
+      "why": "Neither key exists on /api/hs."
+    },
+    {
+      "op": "incotermsLookup",
+      "fields": ["mode"],
+      "verdict": "phantom",
+      "why": "Real key is `category`."
+    }
+  ]
+}
