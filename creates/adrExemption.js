@@ -51,6 +51,13 @@ module.exports = {
 			{ key: 'exempt', label: 'Exempt Under 1.1.3.6', type: 'boolean' },
 			{ key: 'transport_category', label: 'Transport Category', type: 'number' },
 			{ key: 'multiplier', label: 'Multiplier', type: 'number' },
+			// Scope verdicts (2026-08-19): Table A rows listed NOT SUBJECT TO ADR /
+			// CARRIAGE PROHIBITED never enter the 1.1.3.6 math — the API states the
+			// scope instead of a points verdict. Fields are additive and optional.
+			{ key: 'message', label: 'Verdict Message', type: 'string' },
+			{ key: 'not_subject_to_adr', label: 'Not Subject To ADR (road)', type: 'boolean' },
+			{ key: 'conditions_ref', label: 'Carriage Conditions Section (e.g. 5.5.3)', type: 'string' },
+			{ key: 'carriage_prohibited', label: 'Carriage Prohibited (Table A)', type: 'boolean' },
 		],
 	},
 };
