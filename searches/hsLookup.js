@@ -31,19 +31,22 @@ module.exports = {
 					'Enter a numeric HS code (e.g. 8517) or a keyword (e.g. telephones). Both patterns work.',
 			},
 		],
+		// Real reshaped row (phantom-field cleanup 2026-08-19): the perform maps
+		// hscode → hs_code and passes description/level/parent/section through;
+		// `chapter` and `heading` never existed on /api/hs.
 		sample: {
-			hs_code: '0901110000',
-			description: 'Coffee, not roasted, not decaffeinated',
-			section: 'IV',
-			chapter: '09',
-			heading: '0901',
+			hs_code: '09',
+			description: 'Coffee, tea, mate and spices',
+			level: 2,
+			parent: 'TOTAL',
+			section: 'II',
 		},
 		outputFields: [
 			{ key: 'hs_code', label: 'HS Code' },
 			{ key: 'description', label: 'Description' },
+			{ key: 'level', label: 'Level (2=chapter, 4=heading, 6=subheading)', type: 'integer' },
+			{ key: 'parent', label: 'Parent Code' },
 			{ key: 'section', label: 'Section' },
-			{ key: 'chapter', label: 'Chapter' },
-			{ key: 'heading', label: 'Heading' },
 		],
 	},
 };

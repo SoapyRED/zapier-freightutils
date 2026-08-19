@@ -93,6 +93,13 @@ module.exports = {
 			{ key: 'items[]un_number', label: 'Item UN Number' },
 			{ key: 'items[]transport_category', label: 'Item Transport Category' },
 			{ key: 'items[]points', label: 'Item Points', type: 'number' },
+			// Scope verdicts (2026-08-19): same POST path as adrExemption — Table A
+			// rows listed NOT SUBJECT TO ADR / CARRIAGE PROHIBITED never enter the
+			// points math. Conditional: present only when the load carries a
+			// scope-remark row — see contract-known-gaps.
+			{ key: 'not_subject_to_adr', label: 'Not Subject To ADR (road)', type: 'boolean' },
+			{ key: 'conditions_ref', label: 'Carriage Conditions Section (e.g. 5.5.3)', type: 'string' },
+			{ key: 'carriage_prohibited', label: 'Carriage Prohibited (Table A)', type: 'boolean' },
 		],
 	},
 };

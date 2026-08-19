@@ -38,20 +38,23 @@ module.exports = {
 				},
 			},
 		],
+		// Real /api/incoterms shape (phantom-field cleanup 2026-08-19): the
+		// mode field is `category` (any_mode / sea_only), not `mode`.
 		sample: {
 			code: 'FOB',
 			name: 'Free on Board',
-			mode: 'sea',
-			risk_transfer: 'When goods cross ship rail at port of shipment',
-			cost_transfer: 'At port of shipment',
-			insurance: 'Buyer',
+			category: 'sea_only',
+			summary: 'Seller delivers goods on board the vessel at port of shipment. One of the most commonly used terms.',
+			risk_transfer: 'When goods are on board the vessel at the port of shipment',
+			insurance: 'No obligation for either party',
 		},
 		outputFields: [
 			{ key: 'code', label: 'Code' },
 			{ key: 'name', label: 'Name' },
-			{ key: 'mode', label: 'Transport Mode' },
+			{ key: 'category', label: 'Category (any_mode / sea_only)' },
+			{ key: 'summary', label: 'Summary' },
 			{ key: 'risk_transfer', label: 'Risk Transfer' },
-			{ key: 'cost_transfer', label: 'Cost Transfer' },
+			{ key: 'insurance', label: 'Insurance' },
 		],
 	},
 };

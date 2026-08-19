@@ -7,7 +7,7 @@ Zapier integration for [FreightUtils](https://www.freightutils.com) — free fre
 
 ## What's in this release
 
-18 operations — **10 Creates** and **8 Searches** — wrapping the FreightUtils REST API.
+26 operations — **15 Creates** and **11 Searches** — wrapping the FreightUtils REST API.
 
 **Creates**
 - Calculate CBM
@@ -20,6 +20,9 @@ Zapier integration for [FreightUtils](https://www.freightutils.com) — free fre
 - Calculate ADR 1.1.3.6 Exemption
 - Calculate UK Import Duty
 - **Calculate Shipment Summary** — composite covering CBM, chargeable weight, LDM, customs estimate, and DG flags for an entire shipment (multi-item) in one step. Replaces 4–5 chained Zap actions.
+- Calculate Freight Emissions (ISO 14083 / GLEC v3.2, DEFRA/EPA/ADEME factors)
+- Validate Freight Identifier (container ISO 6346 / AWB mod-7 / IMO check digits)
+- Check ICS2 Goods Description
 
 **Searches**
 - Find ADR Entry
@@ -30,6 +33,9 @@ Zapier integration for [FreightUtils](https://www.freightutils.com) — free fre
 - Find ULD (Unit Load Device)
 - Find Sea-Freight Container
 - Find Road-Freight Vehicle
+- Find Airport
+- Find Nearest Airport
+- **Resolve Freight Identifier** — detects what a token is (UN number, IATA/ICAO code, UN/LOCODE, Incoterm, container number, …) and returns the matching records. Returns one row per candidate, flattened from the API's envelope `result.candidates` array.
 
 ## Install
 
@@ -39,7 +45,7 @@ The app is **private** during v0.1.0 — accept the invite URL below to add it t
 
 **Invite URL (v0.1.0 specific):** <https://zapier.com/developer/public-invite/240886/495444/00fc64ef006cef74d55db1356b548b24/>
 
-Authenticate with your FreightUtils API key; the test call hits `/api/health` — green tick means auth works end to end.
+Authenticate with your FreightUtils API key; the test call hits `/api/auth/whoami` — green tick means auth works end to end.
 
 ## Get an API key
 

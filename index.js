@@ -2,7 +2,7 @@ const { version: platformVersion } = require('zapier-platform-core');
 
 const { authentication, beforeRequest, afterResponse } = require('./authentication');
 
-// Creates (12)
+// Creates (15)
 const cbm = require('./creates/cbm');
 const ldm = require('./creates/ldm');
 const chargeableWeight = require('./creates/chargeableWeight');
@@ -15,8 +15,11 @@ const adrExemption = require('./creates/adrExemption');
 const adrExemptionConsignment = require('./creates/adrExemptionConsignment');
 const ukDuty = require('./creates/ukDuty');
 const shipmentSummary = require('./creates/shipmentSummary');
+const emissions = require('./creates/emissions');
+const validateIdentifier = require('./creates/validateIdentifier');
+const ics2Check = require('./creates/ics2Check');
 
-// Searches (8)
+// Searches (11)
 const adrLookup = require('./searches/adrLookup');
 const hsLookup = require('./searches/hsLookup');
 const incotermsLookup = require('./searches/incotermsLookup');
@@ -25,6 +28,9 @@ const unlocodeLookup = require('./searches/unlocodeLookup');
 const uldLookup = require('./searches/uldLookup');
 const containerLookup = require('./searches/containerLookup');
 const vehicleLookup = require('./searches/vehicleLookup');
+const airportLookup = require('./searches/airportLookup');
+const nearestAirport = require('./searches/nearestAirport');
+const resolveReference = require('./searches/resolveReference');
 
 module.exports = {
 	version: require('./package.json').version,
@@ -45,6 +51,9 @@ module.exports = {
 		[adrExemptionConsignment.key]: adrExemptionConsignment,
 		[ukDuty.key]: ukDuty,
 		[shipmentSummary.key]: shipmentSummary,
+		[emissions.key]: emissions,
+		[validateIdentifier.key]: validateIdentifier,
+		[ics2Check.key]: ics2Check,
 	},
 	searches: {
 		[adrLookup.key]: adrLookup,
@@ -55,6 +64,9 @@ module.exports = {
 		[uldLookup.key]: uldLookup,
 		[containerLookup.key]: containerLookup,
 		[vehicleLookup.key]: vehicleLookup,
+		[airportLookup.key]: airportLookup,
+		[nearestAirport.key]: nearestAirport,
+		[resolveReference.key]: resolveReference,
 	},
 	triggers: {},
 };

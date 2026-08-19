@@ -12,7 +12,7 @@ module.exports = {
 	noun: 'Airline',
 	display: {
 		label: 'Find Airline',
-		description: 'Look up an airline by 3-digit AWB prefix (6,352 entries, 390 cargo carriers).',
+		description: 'Look up an airline by 3-digit AWB prefix (6,357 entries).',
 	},
 	operation: {
 		perform,
@@ -26,21 +26,26 @@ module.exports = {
 				helpText: '3-digit IATA AWB prefix, e.g. 176 for Emirates SkyCargo',
 			},
 		],
+		// Real /api/airlines row shape (phantom-field cleanup 2026-08-19):
+		// iata_code / icao_code / has_cargo, and awb_prefix is an ARRAY.
 		sample: {
-			airline_name: 'Emirates SkyCargo',
-			iata: 'EK',
-			icao: 'UAE',
-			awb_prefix: '176',
+			slug: 'emirates',
+			airline_name: 'Emirates',
+			iata_code: 'EK',
+			icao_code: 'UAE',
+			awb_prefix: ['176'],
+			callsign: 'EMIRATES',
 			country: 'United Arab Emirates',
-			cargo: true,
+			has_cargo: true,
 		},
 		outputFields: [
 			{ key: 'airline_name', label: 'Airline Name' },
-			{ key: 'iata', label: 'IATA Code' },
-			{ key: 'icao', label: 'ICAO Code' },
-			{ key: 'awb_prefix', label: 'AWB Prefix' },
+			{ key: 'iata_code', label: 'IATA Code' },
+			{ key: 'icao_code', label: 'ICAO Code' },
+			{ key: 'awb_prefix', label: 'AWB Prefixes' },
+			{ key: 'callsign', label: 'Callsign' },
 			{ key: 'country', label: 'Country' },
-			{ key: 'cargo', label: 'Cargo Carrier', type: 'boolean' },
+			{ key: 'has_cargo', label: 'Cargo Carrier', type: 'boolean' },
 		],
 	},
 };

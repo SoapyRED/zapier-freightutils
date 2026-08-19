@@ -180,6 +180,10 @@ module.exports = {
 				label: 'UN Number',
 				type: 'string',
 				list: true,
+				// Default exercises the DG path so contract-check proves the
+				// compliance block (verified live 2026-08-19: present whenever
+				// any item carries un_number).
+				default: '1203',
 				helpText: 'Optional ADR UN number per item (e.g. 1203). Triggers DG compliance flags in the response.',
 			},
 			{

@@ -31,17 +31,22 @@ module.exports = {
 			{ key: 'bw', label: 'Box Width (cm)', type: 'number', required: true, default: '30' },
 			{ key: 'bh', label: 'Box Height (cm)', type: 'number', required: true, default: '25' },
 		],
+		// Sample + outputFields mirror the real /api/pallet response
+		// (phantom-field cleanup 2026-08-19): limiting_factor was never
+		// returned — the real key is the boolean weight_limited.
 		sample: {
 			total_boxes: 64,
-			layers: 4,
-			boxes_per_layer: 16,
-			limiting_factor: 'height',
+			layers: 8,
+			boxes_per_layer: 8,
+			orientation: 'rotated',
+			utilisation_percent: 100,
+			weight_limited: false,
 		},
 		outputFields: [
 			{ key: 'total_boxes', label: 'Total Boxes', type: 'number' },
 			{ key: 'layers', label: 'Layers', type: 'number' },
 			{ key: 'boxes_per_layer', label: 'Boxes Per Layer', type: 'number' },
-			{ key: 'limiting_factor', label: 'Limiting Factor' },
+			{ key: 'weight_limited', label: 'Weight Limited', type: 'boolean' },
 		],
 	},
 };

@@ -1,5 +1,53 @@
 # Changelog
 
+## 0.5.0 — 2026-08-19 (six new operations + the phantom-field cleanup 0.4.2 queued)
+
+### Added — six operations, closing the parity gap with the MCP/n8n surfaces
+
+Three Creates: **Calculate Freight Emissions** (ISO 14083 / GLEC v3.2 with published DEFRA, EPA
+and ADEME factors), **Validate Freight Identifier** (container ISO 6346, AWB mod-7 and IMO check
+digits — a failed check digit comes back as `valid: false`, never silently dropped), and
+**Check ICS2 Goods Description**. Three Searches: **Find Airport**, **Find Nearest Airport**, and
+**Resolve Freight Identifier** — give it one token (`176`, `UN1845`, `NLRTM`, `FOB`,
+`MSKU1100810`) and it detects what the token is and returns the matching records, one row per
+candidate flattened from the API envelope's `result.candidates` array. 26 operations total: 15
+Creates, 11 Searches.
+
+### Fixed — the phantom output fields 0.4.2 found are now corrected
+
+0.4.2's contract check found 17 declared output fields that production never returns, and said
+plainly that fixing them was its own change because **renaming a declared output key changes what
+users can map** — a Zap mapped to the old key stops resolving and must be re-mapped to the new
+one. This is that change. Every declaration now uses the field's real name, verified live:
+
+- `chargeableWeight`: `billing_basis` → `basis`
+- `pallet`: `limiting_factor` → `weight_limited` (boolean)
+- `adrLookup`: `tunnel_code` → `tunnel_restriction_code`; `limited_quantity` and
+  `excepted_quantity` newly declared
+- `airlineLookup`: `iata` → `iata_code`, `icao` → `icao_code`, `cargo` → `has_cargo`;
+  `callsign` newly declared
+- `incotermsLookup`: `mode` → `category`
+- `hsLookup`: `chapter` and `heading` deleted (they never existed on `/api/hs`); `level`,
+  `parent` and `section` declared instead
+- `adrExemption`: `transport_category` and `multiplier` moved to their real per-item nesting
+  (`items[]transport_category`, `items[]multiplier`)
+- `cbm`: `revenue_tonnes` deleted; `ldm`: `pallet_type` and `quantity` deleted
+- Every sample is now a key-subset of a real production response, captured 2026-08-19
+
+### Added — ADR scope verdicts
+
+`adrLookup`, `adrExemption` and `adrExemptionConsignment` now declare the Table A scope fields
+the API added 2026-08-19: `not_subject_to_adr`, `conditions_ref`, `carriage_prohibited`. They are
+sparse — present only when the row or load carries a scope remark — and recorded as conditional
+in the contract-check baseline, not asserted on every response.
+
+### Fixed — shipmentSummary compliance block was conditional all along, not phantom
+
+The three `compliance__*` fields 0.4.2 ledgered as gaps are real: verified live 2026-08-19,
+production returns the block whenever any item carries `un_number`. The contract check simply
+never sent one. The UN Number input now defaults to `1203` so the check exercises the
+dangerous-goods path, and the three entries are reclassified from phantom to conditional.
+
 ## 0.4.2 — 2026-08-08 (versioned User-Agent)
 
 ### Added

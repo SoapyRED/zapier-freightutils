@@ -80,190 +80,91 @@
       "why": "Present alongside customs__hsCodesPresent, same verification."
     },
     {
-      "op": "shipmentSummary",
-      "field": "compliance__hasDangerousGoods",
-      "verdict": "phantom",
-      "why": "NEEDS REVIEW, and deliberately NOT called conditional. The whole `compliance` block was absent even when the item carried unNumbers:[\"1203\"] (verified 2026-08-08) — so either the block is gone from the response or the input key that triggers it is different from the one the action sends. Both readings are defects; which one it is has not been established."
-    },
-    {
-      "op": "shipmentSummary",
-      "field": "compliance__adrFlags__totalPoints",
-      "verdict": "phantom",
-      "why": "Same block as above — absent with unNumbers supplied."
-    },
-    {
-      "op": "shipmentSummary",
-      "field": "compliance__adrFlags__exemptionApplicable",
-      "verdict": "phantom",
-      "why": "Same block as above."
+      "op": "adrExemption",
+      "field": "not_subject_to_adr",
+      "verdict": "conditional",
+      "why": "Conditional - Table A scope flag (28 rows, 2026-08-19): present only when the entry/load is NOT SUBJECT TO ADR or CARRIAGE PROHIBITED (e.g. un=1845 dry ice, un=0020). The default input 1203 is in scope, so the field is legitimately absent under the check."
     },
     {
       "op": "adrExemption",
-      "field": "transport_category",
-      "verdict": "phantom",
-      "why": "WRONG NESTING LEVEL, not a missing field. The real key is items__transport_category — the value is per-item, and the declaration puts it at the top level where nothing reads it."
+      "field": "conditions_ref",
+      "verdict": "conditional",
+      "why": "Conditional - Table A scope flag (28 rows, 2026-08-19): present only when the entry/load is NOT SUBJECT TO ADR or CARRIAGE PROHIBITED (e.g. un=1845 dry ice, un=0020). The default input 1203 is in scope, so the field is legitimately absent under the check."
     },
     {
       "op": "adrExemption",
-      "field": "multiplier",
-      "verdict": "phantom",
-      "why": "Wrong nesting level — the real key is items__multiplier."
+      "field": "carriage_prohibited",
+      "verdict": "conditional",
+      "why": "Conditional - Table A scope flag (28 rows, 2026-08-19): present only when the entry/load is NOT SUBJECT TO ADR or CARRIAGE PROHIBITED (e.g. un=1845 dry ice, un=0020). The default input 1203 is in scope, so the field is legitimately absent under the check."
     },
     {
-      "op": "cbm",
-      "field": "revenue_tonnes",
-      "verdict": "phantom",
-      "why": "/api/cbm returns cbm_per_piece, total_volume_m3, litres, cubic_inches and pieces. There is no revenue_tonnes on this endpoint at all — it exists on /api/consignment."
+      "op": "adrExemptionConsignment",
+      "field": "not_subject_to_adr",
+      "verdict": "conditional",
+      "why": "Conditional - Table A scope flag (28 rows, 2026-08-19): present only when the entry/load is NOT SUBJECT TO ADR or CARRIAGE PROHIBITED (e.g. un=1845 dry ice, un=0020). The default input 1203 is in scope, so the field is legitimately absent under the check."
     },
     {
-      "op": "chargeableWeight",
-      "field": "billing_basis",
-      "verdict": "phantom",
-      "why": "RENAMED. The real key is `basis`. A user mapping billing_basis has been getting an empty value."
+      "op": "adrExemptionConsignment",
+      "field": "conditions_ref",
+      "verdict": "conditional",
+      "why": "Conditional - Table A scope flag (28 rows, 2026-08-19): present only when the entry/load is NOT SUBJECT TO ADR or CARRIAGE PROHIBITED (e.g. un=1845 dry ice, un=0020). The default input 1203 is in scope, so the field is legitimately absent under the check."
     },
     {
-      "op": "ldm",
-      "field": "pallet_type",
-      "verdict": "phantom",
-      "why": "Not returned at the top level. The echoed input lives under meta__inputs, and there is no pallet_type key there either."
-    },
-    {
-      "op": "ldm",
-      "field": "quantity",
-      "verdict": "phantom",
-      "why": "Wrong level — the echoed quantity is meta__inputs__qty, a different name AND a different level."
-    },
-    {
-      "op": "pallet",
-      "field": "limiting_factor",
-      "verdict": "phantom",
-      "why": "RENAMED. The nearest real key is `weight_limited` (a boolean), which is not the same shape as the string this declares."
+      "op": "adrExemptionConsignment",
+      "field": "carriage_prohibited",
+      "verdict": "conditional",
+      "why": "Conditional - Table A scope flag (28 rows, 2026-08-19): present only when the entry/load is NOT SUBJECT TO ADR or CARRIAGE PROHIBITED (e.g. un=1845 dry ice, un=0020). The default input 1203 is in scope, so the field is legitimately absent under the check."
     },
     {
       "op": "adrLookup",
-      "field": "tunnel_code",
-      "verdict": "phantom",
-      "why": "RENAMED. The real key is tunnel_restriction_code — verified 2026-08-08 against /api/adr?un=1203."
+      "field": "not_subject_to_adr",
+      "verdict": "conditional",
+      "why": "Conditional - Table A scope flag (28 rows, 2026-08-19): present only when the entry/load is NOT SUBJECT TO ADR or CARRIAGE PROHIBITED (e.g. un=1845 dry ice, un=0020). The default input 1203 is in scope, so the field is legitimately absent under the check."
     },
     {
-      "op": "airlineLookup",
-      "field": "iata",
-      "verdict": "phantom",
-      "why": "RENAMED. The real key is iata_code — verified 2026-08-08 against /api/airlines?q=Emirates."
+      "op": "adrLookup",
+      "field": "conditions_ref",
+      "verdict": "conditional",
+      "why": "Conditional - Table A scope flag (28 rows, 2026-08-19): present only when the entry/load is NOT SUBJECT TO ADR or CARRIAGE PROHIBITED (e.g. un=1845 dry ice, un=0020). The default input 1203 is in scope, so the field is legitimately absent under the check."
     },
     {
-      "op": "airlineLookup",
-      "field": "icao",
-      "verdict": "phantom",
-      "why": "RENAMED. The real key is icao_code, same verification."
-    },
-    {
-      "op": "airlineLookup",
-      "field": "cargo",
-      "verdict": "phantom",
-      "why": "RENAMED. The real key is has_cargo (boolean), same verification."
-    },
-    {
-      "op": "hsLookup",
-      "field": "chapter",
-      "verdict": "phantom",
-      "why": "/api/hs returns hscode, description, level, parent and section. There is no chapter key — verified 2026-08-08 against /api/hs?q=coffee."
-    },
-    {
-      "op": "hsLookup",
-      "field": "heading",
-      "verdict": "phantom",
-      "why": "Same endpoint, same verification — no heading key exists."
-    },
-    {
-      "op": "incotermsLookup",
-      "field": "mode",
-      "verdict": "phantom",
-      "why": "RENAMED. The nearest real key is `category` (e.g. \"sea_only\") — verified 2026-08-08 against /api/incoterms?code=FOB."
+      "op": "adrLookup",
+      "field": "carriage_prohibited",
+      "verdict": "conditional",
+      "why": "Conditional - Table A scope flag (28 rows, 2026-08-19): present only when the entry/load is NOT SUBJECT TO ADR or CARRIAGE PROHIBITED (e.g. un=1845 dry ice, un=0020). The default input 1203 is in scope, so the field is legitimately absent under the check."
     }
   ],
   "sampleGaps": [
     {
-      "op": "adrExemption",
-      "fields": ["un_number", "quantity", "transport_category", "multiplier"],
-      "verdict": "phantom",
-      "why": "The sample shows a single-substance shape; the endpoint returns an items[] array. Every one of these is really items__<field>."
-    },
-    {
       "op": "adrLqCheck",
-      "fields": ["items__quantity", "items__unit"],
+      "fields": [
+        "items__quantity",
+        "items__unit"
+      ],
       "verdict": "phantom",
       "why": "RENAMED — the real keys are items__quantity_entered and items__unit_entered."
     },
     {
-      "op": "cbm",
-      "fields": ["length_cm", "width_cm", "height_cm", "revenue_tonnes"],
-      "verdict": "phantom",
-      "why": "The echoed inputs live under meta__inputs__*; revenue_tonnes does not exist on this endpoint."
-    },
-    {
-      "op": "chargeableWeight",
-      "fields": ["length_cm", "width_cm", "height_cm", "billing_basis"],
-      "verdict": "phantom",
-      "why": "Echoed inputs are under meta__inputs__*; billing_basis is really `basis`."
-    },
-    {
-      "op": "ldm",
-      "fields": ["pallet_type", "quantity", "trailer_width_m"],
-      "verdict": "phantom",
-      "why": "Not returned. trailer_width_m in particular predates the loading-metre divisor rework and no key of that name survives."
-    },
-    {
-      "op": "pallet",
-      "fields": ["limiting_factor"],
-      "verdict": "phantom",
-      "why": "Same as the outputFields entry — the real key is weight_limited."
-    },
-    {
       "op": "shipmentSummary",
       "fields": [
-        "compliance", "compliance__hasDangerousGoods", "compliance__adrFlags",
-        "compliance__adrFlags__unNumbers", "compliance__adrFlags__totalPoints",
-        "compliance__adrFlags__exemptionApplicable"
+        "customs",
+        "customs__hsCodesPresent",
+        "customs__canEstimateUkDuty",
+        "dataVersion__adr",
+        "dataVersion__hs"
       ],
-      "verdict": "phantom",
-      "why": "The compliance block was absent even with unNumbers supplied — see the outputFields entry."
-    },
-    {
-      "op": "shipmentSummary",
-      "fields": ["customs", "customs__hsCodesPresent", "customs__canEstimateUkDuty", "dataVersion__adr", "dataVersion__hs"],
       "verdict": "conditional",
       "why": "customs__* verified present with an hsCode on the item; dataVersion__adr / __hs appear when those engines actually run."
     },
     {
       "op": "unitConvert",
-      "fields": ["from", "from__value", "from__unit"],
+      "fields": [
+        "from",
+        "from__value",
+        "from__unit"
+      ],
       "verdict": "phantom",
       "why": "RENAMED. The real block is `input` (input__value, input__unit, input__name)."
-    },
-    {
-      "op": "adrLookup",
-      "fields": ["tunnel_code"],
-      "verdict": "phantom",
-      "why": "Real key is tunnel_restriction_code."
-    },
-    {
-      "op": "airlineLookup",
-      "fields": ["iata", "icao", "cargo"],
-      "verdict": "phantom",
-      "why": "Real keys are iata_code, icao_code, has_cargo."
-    },
-    {
-      "op": "hsLookup",
-      "fields": ["chapter", "heading"],
-      "verdict": "phantom",
-      "why": "Neither key exists on /api/hs."
-    },
-    {
-      "op": "incotermsLookup",
-      "fields": ["mode"],
-      "verdict": "phantom",
-      "why": "Real key is `category`."
     }
   ]
 }
