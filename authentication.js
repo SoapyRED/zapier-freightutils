@@ -46,8 +46,9 @@ const authentication = {
 	],
 
 	// The test call's own answer (/api/auth/whoami → { tier }) tells two connections apart in the
-	// user's account: "FreightUtils (free)" vs "FreightUtils (pro)". Zapier check D003.
-	connectionLabel: 'FreightUtils ({{bundle.inputData.tier}})',
+	// user's account: "free plan" vs "pro plan" (zapier validate D003). Not the app name, an ID or a
+	// key — Zapier publishing requirement 5.6 rules those out of a connection label.
+	connectionLabel: '{{bundle.inputData.tier}} plan',
 };
 
 // Versioned User-Agent, read from package.json rather than typed here.

@@ -22,8 +22,11 @@
   `input`, not `from`.
 - *Check ADR LQ/EQ Eligibility* offers `items[]lq_limit_value` (a number); `items[]lq_limit` is
   the limit as text, e.g. "1 L", and is no longer typed as a number.
-- The connection label shows the key's plan — "FreightUtils (free)" or "FreightUtils (pro)" — from
-  the sign-in test's own answer, instead of a fixed "FreightUtils Account" (`zapier validate` D003).
+- The connection label shows the key's plan — "free plan" or "pro plan" — from the sign-in test's
+  own answer, instead of a fixed "FreightUtils Account" (`zapier validate` D003; no app name, ID or key in it,
+  per Zapier's publishing requirement 5.6).
+- The HS code search is named *Find HS Code*, as Zapier names searches (requirement 5.8); its key is
+  unchanged, so existing Zaps are unaffected.
 - *Find Airline*: `awb_prefix` is declared as a list, as the API returns it (D024).
 
 `zapier validate`: no errors, no publishing tasks. Remaining warnings: D028 (`cleanInputData`, a

@@ -15,8 +15,10 @@ module.exports = {
 	key: 'hsLookup',
 	noun: 'HS Code',
 	display: {
-		label: 'HS Code Lookup',
-		description: 'Looks up WCO HS 2022 codes by free-text product description.',
+		// Searches are named "Find <object>" (Zapier publishing requirement 5.8, Integration Build
+		// Guidelines). Only the label changes — the key, and every Zap that uses it, stay as they were.
+		label: 'Find HS Code',
+		description: 'Finds WCO HS 2022 codes by free-text product description or by code.',
 	},
 	operation: {
 		perform,
