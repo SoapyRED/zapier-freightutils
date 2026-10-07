@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.5.1 — 2026-10-07 (security: two vulnerable dependencies of the Zapier runtime)
+
+### Fixed
+
+- **`lodash` 4.17.21 → 4.18.1 and `form-data` 4.0.4 → 4.0.6 inside the app.** Both arrive through
+  `zapier-platform-core`, and `npm audit --omit=dev` rated them high: lodash
+  (GHSA-r5fr-rjxr-66jc, GHSA-f23m-r3pf-42rh, GHSA-xxjr-mmjv-4gpg) and form-data
+  (GHSA-hmw2-7cc7-3qxx). No `zapier-platform-core` release fixes them on the 17.x line this app
+  is built on — even 19.1.0, the latest, pins form-data 4.0.5, still affected — so `package.json`
+  now carries npm `overrides` for the two packages, the fix the platform has not shipped.
+  `npm audit --omit=dev`: 0 vulnerabilities. Verified with `zapier validate` (no errors) and the
+  contract check against production (24 of 26 operations, every declared field present).
+- No operation, input or output field changes.
+
 ## 0.5.0 — 2026-08-19 (six new operations + the phantom-field cleanup 0.4.2 queued)
 
 ### Added — six operations, closing the parity gap with the MCP/n8n surfaces
