@@ -26,7 +26,7 @@ Zapier integration for [FreightUtils](https://www.freightutils.com) — free fre
 
 **Searches**
 - Find ADR Entry
-- HS Code Lookup
+- Find HS Code
 - Find Incoterm
 - Find Airline
 - Find UN/LOCODE Location
@@ -76,7 +76,7 @@ Rate limits:
 
 **Action** — Zapier AI Action or Formatter: extract `sku_description`, `origin_country`, `customs_value`.
 
-**Action** — FreightUtils: *HS Code Lookup*. Query → `{{sku_description}}`. Returns a list of candidate HS codes.
+**Action** — FreightUtils: *Find HS Code*. Query → `{{sku_description}}`. Returns a list of candidate HS codes.
 
 **Filter** — only continue if the top match has `hs_code` populated.
 
