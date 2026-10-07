@@ -1,9 +1,13 @@
+// A list field arrives as an array; a single mapped value (or a field default) can arrive as a
+// plain value — read it as a one-item list instead of failing on it.
+const toList = (v) => (Array.isArray(v) ? v : v === undefined || v === null || v === '' ? [] : [v]);
+
 const perform = async (z, bundle) => {
 	// Zapier line-item input arrives as parallel arrays. Re-zip into the
 	// items[] array shape that POST /api/adr/lq-check expects.
-	const unNumbers = bundle.inputData.un_numbers || [];
-	const quantities = bundle.inputData.quantities || [];
-	const units = bundle.inputData.units || [];
+	const unNumbers = toList(bundle.inputData.un_numbers);
+	const quantities = toList(bundle.inputData.quantities);
+	const units = toList(bundle.inputData.units);
 
 	if (unNumbers.length === 0) {
 		throw new z.errors.HaltedError('Provide at least one item.');
@@ -53,6 +57,8 @@ module.exports = {
 				type: 'string',
 				required: true,
 				list: true,
+				// A default that produces a real answer (contract-check covers this action through it).
+				default: '1203',
 				helpText:
 					'1–4 digit UN numbers, one per item. Order must match Quantities + Units.',
 			},
@@ -62,7 +68,8 @@ module.exports = {
 				type: 'number',
 				required: true,
 				list: true,
-				helpText: 'Quantity per item. Order must match UN Numbers + Units.',
+				default: '0.5',
+				helpText: 'Quantity per inner packaging, per item. Order must match UN Numbers + Units.',
 			},
 			{
 				key: 'units',
@@ -70,36 +77,49 @@ module.exports = {
 				type: 'string',
 				required: true,
 				list: true,
-				helpText: 'Unit per item: L or kg. Order must match UN Numbers + Quantities.',
+				default: 'L',
+				helpText: 'Unit per item: ml, L, g or kg. Order must match UN Numbers + Quantities.',
 			},
 		],
+		// Production's answer to the defaults (POST /api/adr/lq-check, 2026-10-07): 0.5 L of petrol
+		// per inner packaging against UN 1203's LQ limit of 1 L. The earlier sample carried an
+		// overall_status ("fails") and a summary key ("failing") the endpoint never returns.
 		sample: {
 			mode: 'lq',
-			overall_status: 'fails',
+			overall_status: 'qualifies',
 			items: [
 				{
-					un_number: '1263',
-					substance: 'PAINT',
-					packing_group: 'I',
-					lq_limit: '500 ml',
-					quantity_entered: 125,
+					un_number: '1203',
+					variant_index: 0,
+					substance: 'MOTOR SPIRIT or GASOLINE or PETROL',
+					class: '3',
+					packing_group: 'II',
+					lq_limit: '1 L',
+					lq_limit_value: 1,
+					lq_limit_unit: 'L',
+					eq_code: 'E2',
+					quantity_entered: 0.5,
 					unit_entered: 'L',
-					status: 'exceeds_limit',
-					reason: '125 L exceeds the LQ limit of 500 ml per inner packaging',
+					status: 'within_limit',
+					reason: '0.5 L is within the LQ limit of 1 L per inner packaging',
 				},
 			],
-			summary: { total_items: 1, qualifying: 0, failing: 1 },
+			summary: { total_items: 1, qualifying: 1, exceeding: 0, not_permitted: 0 },
 		},
+		// Nested keys use Zapier's double underscore. "summary.total_items" (a dot) and
+		// "summary.failing" (a key the endpoint has never returned) were offered in the mapper and
+		// produced empty values (2026-10-07, contract-check's first run over this action).
 		outputFields: [
-			{ key: 'overall_status', label: 'Overall Status' },
+			{ key: 'overall_status', label: 'Overall Status (qualifies / does_not_qualify)' },
 			{ key: 'mode', label: 'Mode (LQ or EQ)' },
 			{ key: 'items[]un_number', label: 'Item UN Number' },
 			{ key: 'items[]packing_group', label: 'Item Packing Group' },
 			{ key: 'items[]status', label: 'Per-Item Status' },
 			{ key: 'items[]reason', label: 'Per-Item Reason' },
-			{ key: 'summary.total_items', label: 'Total Items', type: 'number' },
-			{ key: 'summary.qualifying', label: 'Qualifying Items', type: 'number' },
-			{ key: 'summary.failing', label: 'Failing Items', type: 'number' },
+			{ key: 'summary__total_items', label: 'Total Items', type: 'number' },
+			{ key: 'summary__qualifying', label: 'Qualifying Items', type: 'number' },
+			{ key: 'summary__exceeding', label: 'Items Over the Limit', type: 'number' },
+			{ key: 'summary__not_permitted', label: 'Items Where LQ/EQ Is Not Permitted', type: 'number' },
 		],
 	},
 };

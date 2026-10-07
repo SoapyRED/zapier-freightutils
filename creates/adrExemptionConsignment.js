@@ -1,8 +1,12 @@
+// A list field arrives as an array; a single mapped value (or a field default) can arrive as a
+// plain value — read it as a one-item list instead of failing on it.
+const toList = (v) => (Array.isArray(v) ? v : v === undefined || v === null || v === '' ? [] : [v]);
+
 const perform = async (z, bundle) => {
 	// Zapier line-item input arrives as parallel arrays. Re-zip into the
 	// items[] array shape that POST /api/adr-calculator expects.
-	const unNumbers = bundle.inputData.un_numbers || [];
-	const quantities = bundle.inputData.quantities || [];
+	const unNumbers = toList(bundle.inputData.un_numbers);
+	const quantities = toList(bundle.inputData.quantities);
 
 	if (unNumbers.length === 0) {
 		throw new z.errors.HaltedError('Provide at least one UN number + quantity pair.');
@@ -43,8 +47,12 @@ module.exports = {
 				type: 'string',
 				required: true,
 				list: true,
+				// A default that produces a real answer (contract-check covers this action through it):
+				// UN 1203 has one ADR Table A row. A UN with several rows (e.g. 1263) is withheld with
+				// candidates until a packing group is known.
+				default: '1203',
 				helpText:
-					'1–4 digit UN numbers, one per item. Order must match Quantities. Example: 1263, 3082',
+					'1–4 digit UN numbers, one per item. Order must match Quantities. Example: 1203, 1845',
 			},
 			{
 				key: 'quantities',
@@ -52,36 +60,36 @@ module.exports = {
 				type: 'number',
 				required: true,
 				list: true,
+				default: '200',
 				helpText:
 					'Total quantity per item, in kg or L. Order must match UN Numbers.',
 			},
 		],
+		// Production's answer to the defaults (POST /api/adr-calculator, 2026-10-07): 200 L of petrol,
+		// transport category 2 (×3) = 600 points ≤ 1000. The earlier sample showed UN 1263 as one
+		// category 1 row at 6,250 points; the endpoint withholds a bare UN 1263 (several rows).
 		sample: {
 			items: [
 				{
-					un_number: '1263',
-					proper_shipping_name: 'PAINT',
-					transport_category: '1',
-					quantity: 125,
-					multiplier: 50,
-					points: 6250,
-				},
-				{
-					un_number: '3082',
-					proper_shipping_name: 'ENVIRONMENTALLY HAZARDOUS SUBSTANCE, LIQUID, N.O.S.',
-					transport_category: '3',
-					quantity: 1000,
-					multiplier: 1,
-					points: 1000,
+					un_number: '1203',
+					state: 'COUNTED',
+					proper_shipping_name: 'MOTOR SPIRIT or GASOLINE or PETROL',
+					class: '3',
+					packing_group: 'II',
+					variant_index: 0,
+					transport_category: '2',
+					quantity: 200,
+					multiplier: 3,
+					points: 600,
 				},
 			],
-			total_points: 7250,
+			total_points: 600,
 			threshold: 1000,
-			exempt: false,
+			exempt: true,
 			has_category_zero: false,
-			has_quantity_exceedance: true,
-			warnings: ['UN1263 (Category 1): 125 exceeds the 20 kg/L maximum for Transport Category 1'],
-			message: 'Per-substance quantity limit exceeded — full ADR compliance required',
+			has_quantity_exceedance: false,
+			warnings: [],
+			message: '1.1.3.6 exemption applies',
 		},
 		outputFields: [
 			{ key: 'total_points', label: 'Total Transport-Category Points', type: 'number' },

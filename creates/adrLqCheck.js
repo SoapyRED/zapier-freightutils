@@ -45,23 +45,38 @@ module.exports = {
 				choices: { L: 'Litres', kg: 'Kilograms' },
 			},
 		],
+		// Production's answer to the defaults (POST /api/adr/lq-check, 2026-10-07). The earlier sample
+		// carried quantity / unit (the response says quantity_entered / unit_entered), a status the
+		// endpoint never returns ("qualifies" is the overall status; an item is "within_limit") and a
+		// numeric lq_limit (it is text, "1 L"; the number is lq_limit_value).
 		sample: {
+			mode: 'lq',
 			overall_status: 'qualifies',
 			items: [
 				{
 					un_number: '1203',
-					quantity: 0.5,
-					unit: 'L',
-					status: 'qualifies',
-					lq_limit: 1,
+					variant_index: 0,
+					substance: 'MOTOR SPIRIT or GASOLINE or PETROL',
+					class: '3',
+					packing_group: 'II',
+					lq_limit: '1 L',
+					lq_limit_value: 1,
+					lq_limit_unit: 'L',
+					eq_code: 'E2',
+					quantity_entered: 0.5,
+					unit_entered: 'L',
+					status: 'within_limit',
+					reason: '0.5 L is within the LQ limit of 1 L per inner packaging',
 				},
 			],
+			summary: { total_items: 1, qualifying: 1, exceeding: 0, not_permitted: 0 },
 		},
 		outputFields: [
-			{ key: 'overall_status', label: 'Overall Status' },
+			{ key: 'overall_status', label: 'Overall Status (qualifies / does_not_qualify)' },
 			{ key: 'items[]un_number', label: 'UN Number' },
 			{ key: 'items[]status', label: 'Per-Item Status' },
-			{ key: 'items[]lq_limit', label: 'LQ/EQ Limit', type: 'number' },
+			{ key: 'items[]lq_limit', label: 'LQ/EQ Limit (text, e.g. 1 L)' },
+			{ key: 'items[]lq_limit_value', label: 'LQ/EQ Limit (number)', type: 'number' },
 		],
 	},
 };

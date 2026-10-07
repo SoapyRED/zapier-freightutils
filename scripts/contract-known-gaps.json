@@ -136,15 +136,6 @@
   ],
   "sampleGaps": [
     {
-      "op": "adrLqCheck",
-      "fields": [
-        "items__quantity",
-        "items__unit"
-      ],
-      "verdict": "phantom",
-      "why": "RENAMED — the real keys are items__quantity_entered and items__unit_entered."
-    },
-    {
       "op": "shipmentSummary",
       "fields": [
         "customs",
@@ -155,16 +146,6 @@
       ],
       "verdict": "conditional",
       "why": "customs__* verified present with an hsCode on the item; dataVersion__adr / __hs appear when those engines actually run."
-    },
-    {
-      "op": "unitConvert",
-      "fields": [
-        "from",
-        "from__value",
-        "from__unit"
-      ],
-      "verdict": "phantom",
-      "why": "RENAMED. The real block is `input` (input__value, input__unit, input__name)."
     }
   ]
 }
