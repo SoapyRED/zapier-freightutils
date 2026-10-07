@@ -42,7 +42,7 @@ module.exports = {
 			{ key: 'airline_name', label: 'Airline Name' },
 			{ key: 'iata_code', label: 'IATA Code' },
 			{ key: 'icao_code', label: 'ICAO Code' },
-			{ key: 'awb_prefix', label: 'AWB Prefixes' },
+			{ key: 'awb_prefix', label: 'AWB Prefixes', list: true },
 			{ key: 'callsign', label: 'Callsign' },
 			{ key: 'country', label: 'Country' },
 			{ key: 'has_cargo', label: 'Cargo Carrier', type: 'boolean' },

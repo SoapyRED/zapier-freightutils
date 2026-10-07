@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.5.2 — 2026-10-07 (every operation verified against production; samples that match the API)
+
+### Fixed
+
+- **The two consignment actions now have defaults that produce a real answer**, so the contract
+  check covers all 26 operations (it verified 24: *Calculate ADR 1.1.3.6 Exemption (Multi-Item
+  Consignment)* and *Check ADR LQ/EQ Eligibility (Multi-Item Consignment)* stopped on their own
+  empty inputs). Defaults: UN 1203 (one ADR Table A row), 200 L for the exemption and 0.5 L per
+  inner packaging for the LQ check. A list field given a single value is read as a one-item
+  list instead of failing.
+- **LQ/EQ consignment outputs:** the summary is offered as `summary__total_items`,
+  `summary__qualifying`, `summary__exceeding` and `summary__not_permitted`. The old
+  `summary.total_items` (a dot where Zapier nests with `__`) and `summary.failing` (a key the
+  endpoint has never returned) were offered in the mapper and produced empty values.
+- **Samples are production's own answers to each action's defaults** — what Zapier shows before a
+  Zap has run: the exemption consignment no longer shows UN 1263 as a single category 1 row at
+  6,250 points (the endpoint withholds a bare UN 1263, which has several rows); the LQ/EQ samples
+  use the response's own keys (`quantity_entered`, `unit_entered`, `status: within_limit`,
+  `lq_limit` as text with `lq_limit_value` for the number); unit conversion names its input block
+  `input`, not `from`.
+- *Check ADR LQ/EQ Eligibility* offers `items[]lq_limit_value` (a number); `items[]lq_limit` is
+  the limit as text, e.g. "1 L", and is no longer typed as a number.
+- The connection label shows the key's plan — "FreightUtils (free)" or "FreightUtils (pro)" — from
+  the sign-in test's own answer, instead of a fixed "FreightUtils Account" (`zapier validate` D003).
+- *Find Airline*: `awb_prefix` is declared as a list, as the API returns it (D024).
+
+`zapier validate`: no errors, no publishing tasks. Remaining warnings: D028 (`cleanInputData`, a
+recommendation on every action — not taken, because it changes how existing Zaps' inputs are read)
+and D027 (`zapier-platform-core` 19 — a major upgrade for its own release).
+
 ## 0.5.1 — 2026-10-07 (security: two vulnerable dependencies of the Zapier runtime)
 
 ### Fixed

@@ -45,7 +45,9 @@ const authentication = {
 		},
 	],
 
-	connectionLabel: 'FreightUtils Account',
+	// The test call's own answer (/api/auth/whoami → { tier }) tells two connections apart in the
+	// user's account: "FreightUtils (free)" vs "FreightUtils (pro)". Zapier check D003.
+	connectionLabel: 'FreightUtils ({{bundle.inputData.tier}})',
 };
 
 // Versioned User-Agent, read from package.json rather than typed here.

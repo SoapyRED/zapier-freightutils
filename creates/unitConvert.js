@@ -39,9 +39,12 @@ module.exports = {
 				helpText: 'Target unit — must be the same dimension as From (mass, length, volume)',
 			},
 		],
+		// Production's answer to the defaults (GET /api/convert, 2026-10-07); the earlier sample named
+		// the input block "from", which the endpoint has never returned (it is "input").
 		sample: {
-			from: { value: 100, unit: 'kg' },
-			result: { value: 220.46, unit: 'lbs' },
+			input: { value: 100, unit: 'kg', name: 'Kilograms' },
+			result: { value: 220.462442, unit: 'lbs', name: 'Pounds' },
+			formula: 'Kilograms × 2.204624 = Pounds',
 		},
 		outputFields: [
 			{ key: 'result__value', label: 'Converted Value', type: 'number' },
