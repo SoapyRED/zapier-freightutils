@@ -11,7 +11,7 @@ module.exports = {
 	key: 'unlocodeLookup',
 	noun: 'UN/LOCODE',
 	display: {
-		label: 'Find UN/LOCODE Location',
+		label: 'Find UN LOCODE Location',
 		description: 'Search UNECE UN/LOCODE 2024-2 (116,000+ transport locations).',
 	},
 	operation: {

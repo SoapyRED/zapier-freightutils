@@ -3,7 +3,7 @@
 [![GitHub release](https://img.shields.io/github/v/release/SoapyRED/zapier-freightutils)](https://github.com/SoapyRED/zapier-freightutils/releases)
 [![License: MIT](https://img.shields.io/github/license/SoapyRED/zapier-freightutils)](https://opensource.org/licenses/MIT)
 
-Zapier integration for [FreightUtils](https://www.freightutils.com) — free freight tools API. **Currently private** (invite-only). Public Zapier marketplace listing is queued for v0.2.0+.
+Zapier integration for [FreightUtils](https://www.freightutils.com) — free freight tools API. **Currently private** (invite-only); the public App Directory submission is in preparation.
 
 ## What's in this release
 
@@ -16,8 +16,10 @@ Zapier integration for [FreightUtils](https://www.freightutils.com) — free fre
 - Calculate Consignment (single-line totals)
 - Calculate Pallet Fitting
 - Convert Units
-- Check ADR LQ/EQ Eligibility
+- Check ADR LQ and EQ Eligibility
+- Check ADR LQ and EQ Eligibility (Multi-Item Consignment)
 - Calculate ADR 1.1.3.6 Exemption
+- Calculate ADR 1.1.3.6 Exemption (Multi-Item Consignment)
 - Calculate UK Import Duty
 - **Calculate Shipment Summary** — composite covering CBM, chargeable weight, LDM, customs estimate, and DG flags for an entire shipment (multi-item) in one step. Replaces 4–5 chained Zap actions.
 - Calculate Freight Emissions (ISO 14083 / GLEC v3.2, DEFRA/EPA/ADEME factors)
@@ -29,7 +31,7 @@ Zapier integration for [FreightUtils](https://www.freightutils.com) — free fre
 - Find HS Code
 - Find Incoterm
 - Find Airline
-- Find UN/LOCODE Location
+- Find UN LOCODE Location
 - Find ULD (Unit Load Device)
 - Find Sea-Freight Container
 - Find Road-Freight Vehicle
@@ -39,7 +41,7 @@ Zapier integration for [FreightUtils](https://www.freightutils.com) — free fre
 
 ## Install
 
-The app is **private** during v0.1.0 — accept the invite URL below to add it to your Zapier account, then it appears under **Your Apps** in the connector picker.
+The app is **private** until the public listing is approved — accept the invite URL below to add it to your Zapier account, then it appears under **Your Apps** in the connector picker.
 
 **Invite URL (all versions):** <https://zapier.com/developer/public-invite/240886/145e481391f55dc7f247e59cc2b5d855/>
 

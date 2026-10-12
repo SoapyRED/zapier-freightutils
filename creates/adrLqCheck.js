@@ -20,7 +20,7 @@ module.exports = {
 	key: 'adrLqCheck',
 	noun: 'ADR LQ/EQ Check',
 	display: {
-		label: 'Check ADR LQ/EQ Eligibility',
+		label: 'Check ADR LQ and EQ Eligibility',
 		description: 'Limited Quantity / Excepted Quantity eligibility for a single ADR substance.',
 	},
 	operation: {

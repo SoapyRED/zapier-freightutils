@@ -36,7 +36,7 @@ module.exports = {
 	key: 'adrLqCheckConsignment',
 	noun: 'ADR LQ/EQ Check (Consignment)',
 	display: {
-		label: 'Check ADR LQ/EQ Eligibility (Multi-Item Consignment)',
+		label: 'Check ADR LQ and EQ Eligibility (Multi-Item Consignment)',
 		description:
 			'Limited Quantity / Excepted Quantity eligibility for a multi-item ADR consignment in one call.',
 	},
