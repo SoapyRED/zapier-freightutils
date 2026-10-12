@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.5.3 — 2026-10-12 (three labels that pass Zapier's title-case check)
+
+### Fixed
+
+- **Three labels failed Zapier's title-case check (D018)**, which reads each half of a slashed
+  acronym as an ordinary word and asked for "Find Un/Locode Location" and "Check ADR Lq/Eq
+  Eligibility". The labels drop the slash, not the acronym: *Find UN LOCODE Location*, *Check ADR
+  LQ and EQ Eligibility* and *Check ADR LQ and EQ Eligibility (Multi-Item Consignment)*. Labels
+  only — keys, inputs, outputs and descriptions are unchanged (the descriptions keep the official
+  "UN/LOCODE" and "Limited Quantity / Excepted Quantity"), so existing Zaps are unaffected.
+- **README:** the list of Creates names all 15 (the two multi-item consignment actions were
+  missing), and the private-status lines no longer point at v0.1.0 and v0.2.0.
+
+`zapier validate`: no structural errors, 26 checks passed, no D018. The publishing tasks left are
+the ones only live use clears — a successful run and a live Zap for every operation (T001, S002), a
+connected account (A001), an admin on the freightutils.com domain (M005) and three users with live
+Zaps (S001) — plus the D027 warning (`zapier-platform-core` 19, a major upgrade for its own release).
+
 ## 0.5.2 — 2026-10-07 (every operation verified against production; samples that match the API)
 
 ### Fixed
