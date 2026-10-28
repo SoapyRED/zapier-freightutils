@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.5.4 — 2026-10-28 (Find ADR Entry: all 20 Table A columns)
+
+### Added
+
+- **Find ADR Entry** offers the 12 further ADR Table A columns the API has served since 28 October as mappable
+  output fields: packing instructions (column 8), special and mixed packing provisions (9a, 9b), portable tank
+  instructions and special provisions (10, 11), ADR tank code and special provisions (12, 13), vehicle for tank
+  carriage (14), and the carriage special provisions for packages, bulk, loading/unloading/handling and operation
+  (16–19). An empty column is null. The sample carries UN 1203's values. Output-side only — inputs and keys are
+  unchanged, so existing Zaps are unaffected.
+
 ## 0.5.3 — 2026-10-12 (three labels that pass Zapier's title-case check)
 
 ### Fixed
