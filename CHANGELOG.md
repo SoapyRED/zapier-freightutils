@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.5.5 — 2026-11-06 (stable record identifiers declared)
+
+### Added
+
+- The fifteen operations whose answers carry records declare the stable identifiers the API has put on every record
+  since 6 November 2026: `fu_id` (the same across editions) and, where the dataset has editions, `fu_version_id`
+  (`fu_id@<edition>`) — on the record itself for Find ADR Entry, Find Airline, Find Airport, Find Nearest Airport,
+  Find Container, Find HS Code, Find Incoterm, Find ULD, Find UN/LOCODE and Find Vehicle; as `record__fu_id` on
+  Resolve Reference, `items[]fu_id` on both LQ / EQ checks, `factor__fu_id` on Emissions and `flagged[]fu_id` on the
+  ICS2 check. Airlines, ULDs, containers and vehicles have no editions, so they declare `fu_id` only. Sample values
+  were recorded from production for the record each sample shows. Output-side only: the values already reached Zaps;
+  now the mapper offers them before a test step. Inputs and keys are unchanged.
+
 ## 0.5.4 — 2026-10-28 (Find ADR Entry: all 20 Table A columns)
 
 ### Added

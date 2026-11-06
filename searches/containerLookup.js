@@ -27,6 +27,7 @@ module.exports = {
 			},
 		],
 		sample: {
+			fu_id: 'fu:container:40ft-high-cube',
 			slug: '40ft-high-cube',
 			name: '40ft High Cube',
 			internal_length_cm: 1203,
@@ -54,6 +55,7 @@ module.exports = {
 			{ key: 'max_gross_kg', label: 'Max Gross Weight (kg)', type: 'number' },
 			{ key: 'max_payload_kg', label: 'Max Payload (kg)', type: 'number' },
 			{ key: 'tare_weight_kg', label: 'Tare Weight (kg)', type: 'number' },
+			{ key: 'fu_id', label: 'FreightUtils ID (stable across editions)', type: 'string' },
 		],
 	},
 };

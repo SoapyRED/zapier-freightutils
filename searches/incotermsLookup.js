@@ -41,6 +41,7 @@ module.exports = {
 		// Real /api/incoterms shape (phantom-field cleanup 2026-08-19): the
 		// mode field is `category` (any_mode / sea_only), not `mode`.
 		sample: {
+			fu_id: 'fu:incoterm:FOB', fu_version_id: 'fu:incoterm:FOB@2020',
 			code: 'FOB',
 			name: 'Free on Board',
 			category: 'sea_only',
@@ -55,6 +56,8 @@ module.exports = {
 			{ key: 'summary', label: 'Summary' },
 			{ key: 'risk_transfer', label: 'Risk Transfer' },
 			{ key: 'insurance', label: 'Insurance' },
+			{ key: 'fu_id', label: 'FreightUtils ID (stable across editions)', type: 'string' },
+			{ key: 'fu_version_id', label: 'FreightUtils Version ID (this edition)', type: 'string' },
 		],
 	},
 };

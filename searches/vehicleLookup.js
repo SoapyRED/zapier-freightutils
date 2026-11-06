@@ -32,6 +32,7 @@ module.exports = {
 			},
 		],
 		sample: {
+			fu_id: 'fu:vehicle:luton-van',
 			slug: 'luton-van',
 			name: 'Luton Van 3.5T',
 			category: 'van',
@@ -52,6 +53,7 @@ module.exports = {
 			{ key: 'max_payload', label: 'Max Payload (kg)', type: 'number' },
 			{ key: 'gross_vehicle_weight', label: 'Gross Vehicle Weight (kg)', type: 'number' },
 			{ key: 'euro_pallets', label: 'Euro Pallets', type: 'number' },
+			{ key: 'fu_id', label: 'FreightUtils ID (stable across editions)', type: 'string' },
 		],
 	},
 };

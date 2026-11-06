@@ -32,6 +32,7 @@ module.exports = {
 			{ key: 'type', label: 'Airport Type', type: 'string', choices: ['large_airport', 'medium_airport', 'small_airport'], required: false, default: 'large_airport' },
 		],
 		sample: {
+			fu_id: 'fu:airport:EGLL', fu_version_id: 'fu:airport:EGLL@2026-10-30',
 			ident: 'EGLL',
 			iata_code: 'LHR',
 			name: 'London Heathrow Airport',
@@ -49,6 +50,8 @@ module.exports = {
 			{ key: 'type', label: 'Airport Type', type: 'string' },
 			{ key: 'distance_km', label: 'Distance (km)', type: 'number' },
 			{ key: 'country_name', label: 'Country', type: 'string' },
+			{ key: 'fu_id', label: 'FreightUtils ID (stable across editions)', type: 'string' },
+			{ key: 'fu_version_id', label: 'FreightUtils Version ID (this edition)', type: 'string' },
 		],
 	},
 };

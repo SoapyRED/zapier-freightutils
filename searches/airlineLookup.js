@@ -29,6 +29,7 @@ module.exports = {
 		// Real /api/airlines row shape (phantom-field cleanup 2026-08-19):
 		// iata_code / icao_code / has_cargo, and awb_prefix is an ARRAY.
 		sample: {
+			fu_id: 'fu:airline:emirates',
 			slug: 'emirates',
 			airline_name: 'Emirates',
 			iata_code: 'EK',
@@ -46,6 +47,7 @@ module.exports = {
 			{ key: 'callsign', label: 'Callsign' },
 			{ key: 'country', label: 'Country' },
 			{ key: 'has_cargo', label: 'Cargo Carrier', type: 'boolean' },
+			{ key: 'fu_id', label: 'FreightUtils ID (stable across editions)', type: 'string' },
 		],
 	},
 };

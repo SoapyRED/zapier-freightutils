@@ -37,6 +37,7 @@ module.exports = {
 		// hscode → hs_code and passes description/level/parent/section through;
 		// `chapter` and `heading` never existed on /api/hs.
 		sample: {
+			fu_id: 'fu:hs:09', fu_version_id: 'fu:hs:09@2022',
 			hs_code: '09',
 			description: 'Coffee, tea, mate and spices',
 			level: 2,
@@ -49,6 +50,8 @@ module.exports = {
 			{ key: 'level', label: 'Level (2=chapter, 4=heading, 6=subheading)', type: 'integer' },
 			{ key: 'parent', label: 'Parent Code' },
 			{ key: 'section', label: 'Section' },
+			{ key: 'fu_id', label: 'FreightUtils ID (stable across editions)', type: 'string' },
+			{ key: 'fu_version_id', label: 'FreightUtils Version ID (this edition)', type: 'string' },
 		],
 	},
 };

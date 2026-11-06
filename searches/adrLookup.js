@@ -29,6 +29,7 @@ module.exports = {
 		// Real /api/adr row shape (phantom-field cleanup 2026-08-19): the tunnel
 		// field is tunnel_restriction_code, stored WITH parentheses.
 		sample: {
+			fu_id: 'fu:adr:un:1203:II:F1', fu_version_id: 'fu:adr:un:1203:II:F1@2025',
 			un_number: '1203',
 			proper_shipping_name: 'MOTOR SPIRIT or GASOLINE or PETROL',
 			class: '3',
@@ -78,6 +79,8 @@ module.exports = {
 			{ key: 'not_subject_to_adr', label: 'Not Subject To ADR (road)', type: 'boolean' },
 			{ key: 'conditions_ref', label: 'Carriage Conditions Section (e.g. 5.5.3)' },
 			{ key: 'carriage_prohibited', label: 'Carriage Prohibited (Table A)', type: 'boolean' },
+			{ key: 'fu_id', label: 'FreightUtils ID (stable across editions)', type: 'string' },
+			{ key: 'fu_version_id', label: 'FreightUtils Version ID (this edition)', type: 'string' },
 		],
 	},
 };
