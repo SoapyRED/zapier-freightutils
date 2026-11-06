@@ -39,7 +39,7 @@ module.exports = {
 		sample: {
 			available: true,
 			tonne_km: 500,
-			factor: { id: 'defra_hgv_avg', mode: 'road', authority: 'UK DEFRA / DESNZ — Greenhouse gas reporting: conversion factors', edition: '2026', region: 'uk', unit: 'kgCO2e/tonne-km', wtw: 0.12715, ttw: 0.10356 },
+			factor: { fu_id: 'fu:emission-factor:defra_hgv_avg', fu_version_id: 'fu:emission-factor:defra_hgv_avg@v1', id: 'defra_hgv_avg', mode: 'road', authority: 'UK DEFRA / DESNZ — Greenhouse gas reporting: conversion factors', edition: '2026', region: 'uk', unit: 'kgCO2e/tonne-km', wtw: 0.12715, ttw: 0.10356 },
 			emissions: { wtw_kgco2e: 63.575, ttw_kgco2e: 51.78, primary_kgco2e: 63.575, basis_used: 'wtw' },
 			mass_basis: 'actual_gross_mass',
 			empty_running: 'sector_average_included',
@@ -59,6 +59,8 @@ module.exports = {
 			{ key: 'mass_basis', label: 'Mass Basis', type: 'string' },
 			{ key: 'methodology', label: 'Methodology', type: 'string' },
 			{ key: 'summary', label: 'Summary', type: 'string' },
+			{ key: 'factor__fu_id', label: 'Factor FreightUtils ID (stable across editions)', type: 'string' },
+			{ key: 'factor__fu_version_id', label: 'Factor FreightUtils Version ID (this edition)', type: 'string' },
 		],
 	},
 };

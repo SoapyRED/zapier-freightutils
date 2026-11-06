@@ -28,6 +28,7 @@ module.exports = {
 			},
 		],
 		sample: {
+			fu_id: 'fu:uld:ake-ld3',
 			code: 'AKE',
 			name: 'LD3',
 			slug: 'ake-ld3',
@@ -50,6 +51,7 @@ module.exports = {
 			{ key: 'max_gross_weight', label: 'Max Gross Weight (kg)', type: 'number' },
 			{ key: 'tare_weight', label: 'Tare Weight (kg)', type: 'number' },
 			{ key: 'usable_volume', label: 'Usable Volume (m³)', type: 'number' },
+			{ key: 'fu_id', label: 'FreightUtils ID (stable across editions)', type: 'string' },
 		],
 	},
 };

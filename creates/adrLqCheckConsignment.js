@@ -89,6 +89,7 @@ module.exports = {
 			overall_status: 'qualifies',
 			items: [
 				{
+					fu_id: 'fu:adr:un:1203:II:F1', fu_version_id: 'fu:adr:un:1203:II:F1@2025',
 					un_number: '1203',
 					variant_index: 0,
 					substance: 'MOTOR SPIRIT or GASOLINE or PETROL',
@@ -120,6 +121,8 @@ module.exports = {
 			{ key: 'summary__qualifying', label: 'Qualifying Items', type: 'number' },
 			{ key: 'summary__exceeding', label: 'Items Over the Limit', type: 'number' },
 			{ key: 'summary__not_permitted', label: 'Items Where LQ/EQ Is Not Permitted', type: 'number' },
+			{ key: 'items[]fu_id', label: 'Item FreightUtils ID (stable across editions)', type: 'string' },
+			{ key: 'items[]fu_version_id', label: 'Item FreightUtils Version ID (this edition)', type: 'string' },
 		],
 	},
 };

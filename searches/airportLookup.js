@@ -31,6 +31,7 @@ module.exports = {
 			{ key: 'q', label: 'Name or City', type: 'string', required: false, helpText: 'Search by airport name or city, e.g. heathrow.' },
 		],
 		sample: {
+			fu_id: 'fu:airport:EGLL', fu_version_id: 'fu:airport:EGLL@2026-10-30',
 			ident: 'EGLL',
 			iata_code: 'LHR',
 			name: 'London Heathrow Airport',
@@ -52,6 +53,8 @@ module.exports = {
 			{ key: 'country_name', label: 'Country', type: 'string' },
 			{ key: 'latitude', label: 'Latitude', type: 'number' },
 			{ key: 'longitude', label: 'Longitude', type: 'number' },
+			{ key: 'fu_id', label: 'FreightUtils ID (stable across editions)', type: 'string' },
+			{ key: 'fu_version_id', label: 'FreightUtils Version ID (this edition)', type: 'string' },
 		],
 	},
 };

@@ -27,7 +27,7 @@ module.exports = {
 		sample: {
 			description: 'used auto parts',
 			flagged: [
-				{ term: 'Auto Parts', note: 'Listed stop-word found within the description. On its own this term is unacceptable; make sure the description is specific enough to identify the goods — replace generic terms with the actual product.' },
+				{ fu_id: 'fu:ics2-stop-word:Auto%20Parts', fu_version_id: 'fu:ics2-stop-word:Auto%20Parts@2026-08-03', term: 'Auto Parts', note: 'Listed stop-word found within the description. On its own this term is unacceptable; make sure the description is specific enough to identify the goods — replace generic terms with the actual product.' },
 			],
 			clean: false,
 			caveat: 'The EU ICS2 stop-words list is non-exhaustive and updated periodically.',
@@ -37,6 +37,8 @@ module.exports = {
 			{ key: 'flagged[]term', label: 'Flagged Term', type: 'string' },
 			{ key: 'flagged[]note', label: 'Why Flagged', type: 'string' },
 			{ key: 'caveat', label: 'Caveat', type: 'string' },
+			{ key: 'flagged[]fu_id', label: 'Flagged Term FreightUtils ID (stable across editions)', type: 'string' },
+			{ key: 'flagged[]fu_version_id', label: 'Flagged Term FreightUtils Version ID (this edition)', type: 'string' },
 		],
 	},
 };

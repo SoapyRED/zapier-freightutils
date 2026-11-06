@@ -27,6 +27,7 @@ module.exports = {
 			},
 		],
 		sample: {
+			fu_id: 'fu:locode:NLRTM', fu_version_id: 'fu:locode:NLRTM@2025-1',
 			code: 'NLRTM',
 			country: 'NL',
 			location_code: 'RTM',
@@ -46,6 +47,8 @@ module.exports = {
 			{ key: 'name_ascii', label: 'Location Name (ASCII)' },
 			{ key: 'subdivision', label: 'Subdivision' },
 			{ key: 'iata_code', label: 'IATA Code' },
+			{ key: 'fu_id', label: 'FreightUtils ID (stable across editions)', type: 'string' },
+			{ key: 'fu_version_id', label: 'FreightUtils Version ID (this edition)', type: 'string' },
 		],
 	},
 };

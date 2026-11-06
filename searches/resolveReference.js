@@ -26,6 +26,7 @@ module.exports = {
 			{ key: 'q', label: 'Identifier', type: 'string', required: true, default: 'UN1845', helpText: 'One identifier, max 32 characters. Not free text — a single token like 176, UN1845, NLRTM, FOB, or MSKU1100810.' },
 		],
 		sample: {
+			record: { fu_id: 'fu:adr:un:1845:none:M11', fu_version_id: 'fu:adr:un:1845:none:M11@2025', },
 			entity_type: 'dangerous_good',
 			identifier_type: 'un_number',
 			value_normalized: '1845',
@@ -48,6 +49,8 @@ module.exports = {
 			{ key: 'canonical_url', label: 'Canonical Page URL', type: 'string' },
 			{ key: 'api_url', label: 'API URL', type: 'string' },
 			{ key: 'citation__text', label: 'Citation', type: 'string' },
+			{ key: 'record__fu_id', label: 'Record FreightUtils ID (stable across editions)', type: 'string' },
+			{ key: 'record__fu_version_id', label: 'Record FreightUtils Version ID (this edition)', type: 'string' },
 		],
 	},
 };
